@@ -1,4 +1,5 @@
 function productFeatureOne() {
-  console.debug("productFeatureOne");
+  console.debug("hey from productFeatureOne");
   utilOne();
 }
+console.debug("productFeatureOne declared");
