@@ -1,0 +1,13 @@
+{
+  "name": "site-scripts",
+  "version": "1.0.0",
+  "description": "Site scripts",
+  "type": "module",
+  "scripts": {
+    "dev": "vite & vite build --watch",
+    "build": "vite build"
+  },
+  "devDependencies": {
+    "vite": "^5.3.4"
+  }
+}
