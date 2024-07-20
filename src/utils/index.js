@@ -1,1 +1,1 @@
-export * from "./utilOne";
+export * from "./util-one";

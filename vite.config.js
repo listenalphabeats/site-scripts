@@ -1,5 +1,6 @@
 import { defineConfig } from "vite";
-import { modifyOutputPlugin } from "./modifyOutputPlugin";
+import { modifyOutputPlugin } from "./utils/modify-output-plugin";
+import { logModifiedFiles } from "./utils/log-modified-files-plugin";
 
 export default defineConfig({
   build: {
@@ -17,5 +18,5 @@ export default defineConfig({
       plugins: [modifyOutputPlugin()],
     },
   },
-  plugins: [modifyOutputPlugin()],
+  plugins: [logModifiedFiles(), modifyOutputPlugin()],
 });

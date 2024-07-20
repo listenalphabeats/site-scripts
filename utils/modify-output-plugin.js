@@ -1,6 +1,6 @@
 export function modifyOutputPlugin() {
   return {
-    name: "modify-output",
+    name: "modify-output-plugin",
     generateBundle(_, bundle) {
       for (const [fileName, file] of Object.entries(bundle)) {
         if (fileName === "main.js") {
