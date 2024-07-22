@@ -19,4 +19,7 @@ export default defineConfig({
     },
   },
   plugins: [logModifiedFiles(), modifyOutputPlugin()],
+  server: {
+    port: 3000,
+  },
 });
