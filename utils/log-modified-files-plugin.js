@@ -31,32 +31,31 @@ export function logModifiedFiles() {
           );
 
           if (deletedFiles.length) {
-            console.log(chalk.red("DELETED:"));
+            console.log(`\n`, chalk.red("DELETED:"));
             deletedFiles.forEach((file) => {
               const distPath = path.join(file);
               console.log(chalk.red(getScriptString("NEXT_TAG", distPath)));
             });
-            console.log();
           }
 
           if (modifiedFiles.length) {
-            console.log(chalk.hex("#FFA500")("MODIFIED:"));
+            console.log(`\n`, chalk.hex("#FFA500")("MODIFIED:"));
             modifiedFiles.forEach((file) => {
               const distPath = path.join(file);
               console.log(
                 chalk.hex("#FFA500")(getScriptString("NEXT_TAG", distPath))
               );
             });
-            console.log();
           }
 
           if (newFiles.length) {
-            console.log(chalk.green("NEW:"));
+            console.log(`\n`, chalk.green("NEW:"));
             newFiles.forEach((file) => {
               const distPath = path.join(file);
               console.log(chalk.green(getScriptString("NEXT_TAG", distPath)));
             });
           }
+          console.log();
         } catch (error) {
           console.error("Error fetching git status:", error);
         }
