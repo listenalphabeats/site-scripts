@@ -1,6 +1,6 @@
 const SIGN_UP_BASIC_URL = "https://accounts.listenalphabeats.com/sign-up";
 
-let plan = "YEARLY"; // Early plan by default
+let plan = "YEARLY"; // Yearly plan by default
 let paymentProvider = "";
 
 const annualButton = document.getElementById("plan-annual");
@@ -22,6 +22,7 @@ function setPlanYearly() {
   annualButton.classList.add("active");
   paymentKlarna.classList.remove("disabled");
   selectUpfront();
+  updatePrimaryButtonUrls();
 }
 function setPlanMonthly() {
   plan = "MONTHLY";
@@ -29,16 +30,19 @@ function setPlanMonthly() {
   monthlyButton.classList.add("active");
   paymentKlarna.classList.add("disabled");
   selectUpfront();
+  updatePrimaryButtonUrls();
 }
 function selectUpfront() {
   paymentProvider = "";
   paymentKlarna.classList.remove("active");
   paymentUpfront.classList.add("active");
+  updatePrimaryButtonUrls();
 }
 function selectKlarna() {
   paymentProvider = "klarna";
   paymentUpfront.classList.remove("active");
   paymentKlarna.classList.add("active");
+  updatePrimaryButtonUrls();
 }
 function getNewsletterDiscountParams() {
   return window.NEWSLETTER_DISCOUNT_PARAMS_STORAGE_ID
@@ -46,19 +50,20 @@ function getNewsletterDiscountParams() {
     : undefined;
 }
 
-function navigateToSignUp() {
+function updatePrimaryButtonUrls() {
   let url = SIGN_UP_BASIC_URL + "?plan=" + plan;
-  const newsletterDisountParams = getNewsletterDiscountParams();
+  const newsletterDiscountParams = getNewsletterDiscountParams();
 
-  if (newsletterDisountParams) {
-    url += "&" + newsletterDisountParams;
+  if (newsletterDiscountParams) {
+    url += "&" + newsletterDiscountParams;
   }
 
   if (paymentProvider) {
-    url += "&" + "paymentProvider=" + paymentProvider;
+    url += "&paymentProvider=" + paymentProvider;
   }
 
-  window.location.href = url;
+  primaryButtonDesktop.href = url;
+  primaryButtonMobile.href = url;
 }
 
 /** MAIN CODE ===================================================== */
@@ -68,8 +73,6 @@ function handlePricingSelectAndSignupNav() {
   monthlyButton.addEventListener("click", setPlanMonthly);
   paymentUpfront.addEventListener("click", selectUpfront);
   paymentKlarna.addEventListener("click", selectKlarna);
-  primaryButtonDesktop.addEventListener("click", navigateToSignUp);
-  primaryButtonMobile.addEventListener("click", navigateToSignUp);
 }
 
 document.addEventListener("DOMContentLoaded", handlePricingSelectAndSignupNav);

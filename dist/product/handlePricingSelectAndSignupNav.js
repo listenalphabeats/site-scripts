@@ -16,6 +16,7 @@ function setPlanYearly() {
   annualButton.classList.add("active");
   paymentKlarna.classList.remove("disabled");
   selectUpfront();
+  updatePrimaryButtonUrls();
 }
 function setPlanMonthly() {
   plan = "MONTHLY";
@@ -23,37 +24,39 @@ function setPlanMonthly() {
   monthlyButton.classList.add("active");
   paymentKlarna.classList.add("disabled");
   selectUpfront();
+  updatePrimaryButtonUrls();
 }
 function selectUpfront() {
   paymentProvider = "";
   paymentKlarna.classList.remove("active");
   paymentUpfront.classList.add("active");
+  updatePrimaryButtonUrls();
 }
 function selectKlarna() {
   paymentProvider = "klarna";
   paymentUpfront.classList.remove("active");
   paymentKlarna.classList.add("active");
+  updatePrimaryButtonUrls();
 }
 function getNewsletterDiscountParams() {
   return window.NEWSLETTER_DISCOUNT_PARAMS_STORAGE_ID ? localStorage.getItem(window.NEWSLETTER_DISCOUNT_PARAMS_STORAGE_ID) : void 0;
 }
-function navigateToSignUp() {
+function updatePrimaryButtonUrls() {
   let url = SIGN_UP_BASIC_URL + "?plan=" + plan;
-  const newsletterDisountParams = getNewsletterDiscountParams();
-  if (newsletterDisountParams) {
-    url += "&" + newsletterDisountParams;
+  const newsletterDiscountParams = getNewsletterDiscountParams();
+  if (newsletterDiscountParams) {
+    url += "&" + newsletterDiscountParams;
   }
   if (paymentProvider) {
     url += "&paymentProvider=" + paymentProvider;
   }
-  window.location.href = url;
+  primaryButtonDesktop.href = url;
+  primaryButtonMobile.href = url;
 }
 function handlePricingSelectAndSignupNav() {
   annualButton.addEventListener("click", setPlanYearly);
   monthlyButton.addEventListener("click", setPlanMonthly);
   paymentUpfront.addEventListener("click", selectUpfront);
   paymentKlarna.addEventListener("click", selectKlarna);
-  primaryButtonDesktop.addEventListener("click", navigateToSignUp);
-  primaryButtonMobile.addEventListener("click", navigateToSignUp);
 }
 document.addEventListener("DOMContentLoaded", handlePricingSelectAndSignupNav);
