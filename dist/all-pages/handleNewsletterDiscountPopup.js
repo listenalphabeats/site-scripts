@@ -1,9 +1,8 @@
+const NEWSLETTER_DISCOUNT_PARAMS = "couponId=ZdKIcH6B&percentOff=10&discountName=10% Newsletter Discount";
 const MODAL_ID = "discount-modal";
 const BACKDROP_ID = "discount-modal-background";
 const CLOSE_BTN_ID = "discount-modal-close-button";
 const FORM_ID = "discount-form";
-const NEWSLETTER_DISCOUNT_PARAMS_STORAGE_ID = "newsletterDiscountParams";
-const NEWSLETTER_DISCOUNT_PARAMS = "couponId=ZdKIcH6B&percentOff=10&discountName=10% Newsletter Discount";
 const FORM_SUBMITTED_AT_STORAGE_ID = "formSubmittedAt";
 const FORM_DISMISSED_AT_STORAGE_ID = "formDismissedAt";
 function isGooglebot() {
@@ -23,10 +22,12 @@ function hideModal() {
 }
 function submitForm() {
   localStorage.setItem(FORM_SUBMITTED_AT_STORAGE_ID, (/* @__PURE__ */ new Date()).getTime());
-  localStorage.setItem(
-    NEWSLETTER_DISCOUNT_PARAMS_STORAGE_ID,
-    NEWSLETTER_DISCOUNT_PARAMS
-  );
+  if (window.NEWSLETTER_DISCOUNT_PARAMS_STORAGE_ID) {
+    localStorage.setItem(
+      window.NEWSLETTER_DISCOUNT_PARAMS_STORAGE_ID,
+      NEWSLETTER_DISCOUNT_PARAMS
+    );
+  }
   const successContinueBtn = document.querySelector(
     ".popup-modal_success-message-wrapper a"
   );
