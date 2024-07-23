@@ -38,9 +38,6 @@ function selectKlarna() {
   paymentKlarna.classList.add("active");
   updatePrimaryButtonUrls();
 }
-function getNewsletterDiscountParams() {
-  return window.NEWSLETTER_DISCOUNT_PARAMS_STORAGE_ID ? localStorage.getItem(window.NEWSLETTER_DISCOUNT_PARAMS_STORAGE_ID) : void 0;
-}
 function updatePrimaryButtonUrls() {
   let url = SIGN_UP_BASIC_URL + "?plan=" + plan;
   const newsletterDiscountParams = getNewsletterDiscountParams();
