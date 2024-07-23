@@ -68,6 +68,7 @@ function handlePricingSelectAndSignupNav() {
   monthlyButton.addEventListener('click', setPlanMonthly)
   paymentUpfront.addEventListener('click', selectUpfront)
   paymentKlarna.addEventListener('click', selectKlarna)
+  updatePrimaryButtonUrls()
 }
 
 document.addEventListener('DOMContentLoaded', handlePricingSelectAndSignupNav)
