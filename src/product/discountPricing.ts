@@ -39,7 +39,7 @@ function upTitlePrice(strikedAfter, currentAfter) {
 
 function upYearBundlePrice(oldPrice, newPrice) {
   if (yearBundleDiv) {
-    yearBundleDiv.innerHTML = `1-Year bundle - <span class="text-style-strikethrough text-color-neutral-82">$${oldPrice.toFixed(
+    yearBundleDiv.innerHTML = `1-Year bundle - <span class="text-style-strikethrough text-color-neutral-82 text-weight-normal">$${oldPrice.toFixed(
       2
     )}</span> $${newPrice.toFixed(2)}`
   }
@@ -47,7 +47,7 @@ function upYearBundlePrice(oldPrice, newPrice) {
 
 function upMonthBundlePrice(oldPrice, newPrice) {
   if (monthBundleDiv) {
-    monthBundleDiv.innerHTML = `1-Month bundle - <span class="text-style-strikethrough text-color-neutral-82">$${oldPrice.toFixed(
+    monthBundleDiv.innerHTML = `1-Month bundle - <span class="text-style-strikethrough text-color-neutral-82 text-weight-normal">$${oldPrice.toFixed(
       2
     )}</span> $${newPrice.toFixed(2)}`
   }
