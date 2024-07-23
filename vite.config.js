@@ -1,6 +1,6 @@
 import { defineConfig } from "vite";
 import { modifyOutputPlugin } from "./utils/modify-output-plugin";
-import { logModifiedFiles } from "./utils/log-modified-files-plugin";
+import { logDistFilesPlugin } from "./utils/log-dist-files-plugin";
 
 export default defineConfig({
   build: {
@@ -18,7 +18,7 @@ export default defineConfig({
       plugins: [modifyOutputPlugin()],
     },
   },
-  plugins: [logModifiedFiles(), modifyOutputPlugin()],
+  plugins: [modifyOutputPlugin(), logDistFilesPlugin()],
   server: {
     port: 3000,
   },
