@@ -1,1 +1,1 @@
-export * from "./handleNewsletterDiscountPopup";
+export * from './handleNewsletterDiscountPopup'
