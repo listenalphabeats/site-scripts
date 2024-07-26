@@ -1,4 +1,6 @@
 const titlePriceDiv = document.getElementById("title-price");
+const discountBadgeDiv = document.getElementById("discount-badge");
+const discountBadgeTitle = document.getElementById("discount-badge-title");
 const strikedSpan = titlePriceDiv == null ? void 0 : titlePriceDiv.querySelector("span");
 const titlePriceDivMob = document.getElementById("title-price-mob");
 const strikedSpanMob = titlePriceDivMob == null ? void 0 : titlePriceDivMob.querySelector("span");
@@ -66,8 +68,14 @@ function applyDiscount(before, value, isPercentage = false) {
     updateBundlePriceHtml(monthPrice, monthPrice - value, monthBundleDiv);
   }
 }
+function showDiscountBadge(discountName) {
+  discountBadgeDiv == null ? void 0 : discountBadgeDiv.setAttribute("style", "display: flex;");
+  if (discountBadgeTitle) {
+    discountBadgeTitle.textContent = discountName;
+  }
+}
 function discountPricing() {
-  var _a, _b;
+  var _a, _b, _c, _d;
   const before = parsePageCurrentPrice();
   const rewardful = getCookie("rewardful.referral");
   const newsletterParams = getNewsletterDiscountParams();
@@ -87,9 +95,13 @@ function discountPricing() {
   if (maxDiscount === 0) return;
   if (rewardfulAmountOff === maxDiscount) {
     applyDiscount(before, rewardfulAmountOff);
+    discountBadgeDiv == null ? void 0 : discountBadgeDiv.setAttribute("style", "display: flex;");
+    showDiscountBadge(((_c = rewardful == null ? void 0 : rewardful.coupon) == null ? void 0 : _c.name) || "");
   } else {
     const discountMultiplier = 1 - Math.max(newsletterPercentOff, rewardfulPercentOff) / 100;
     applyDiscount(before, discountMultiplier, true);
+    const discountName = (newsletterPercentOff > rewardfulPercentOff ? new URLSearchParams(newsletterParams || "").get("discountName") : (_d = rewardful == null ? void 0 : rewardful.coupon) == null ? void 0 : _d.name) || "Discount";
+    showDiscountBadge(discountName);
   }
 }
 discountPricing();

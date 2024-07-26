@@ -3,6 +3,8 @@ import { getCookie } from '../utils'
 import { getNewsletterDiscountParams } from './utils'
 
 const titlePriceDiv = document.getElementById('title-price')
+const discountBadgeDiv = document.getElementById('discount-badge')
+const discountBadgeTitle = document.getElementById('discount-badge-title')
 const strikedSpan = titlePriceDiv?.querySelector('span')
 const titlePriceDivMob = document.getElementById('title-price-mob')
 const strikedSpanMob = titlePriceDivMob?.querySelector('span')
@@ -76,6 +78,13 @@ function applyDiscount(before, value, isPercentage = false) {
   }
 }
 
+function showDiscountBadge(discountName) {
+  discountBadgeDiv?.setAttribute('style', 'display: flex;')
+  if (discountBadgeTitle) {
+    discountBadgeTitle.textContent = discountName
+  }
+}
+
 export function discountPricing() {
   const before = parsePageCurrentPrice()
   const rewardful = getCookie<RewardfulBrowserCookie>('rewardful.referral')
@@ -100,10 +109,17 @@ export function discountPricing() {
 
   if (rewardfulAmountOff === maxDiscount) {
     applyDiscount(before, rewardfulAmountOff)
+    discountBadgeDiv?.setAttribute('style', 'display: flex;')
+    showDiscountBadge(rewardful?.coupon?.name || '')
   } else {
     const discountMultiplier =
       1 - Math.max(newsletterPercentOff, rewardfulPercentOff) / 100
     applyDiscount(before, discountMultiplier, true)
+    const discountName =
+      (newsletterPercentOff > rewardfulPercentOff
+        ? new URLSearchParams(newsletterParams || '').get('discountName')
+        : rewardful?.coupon?.name) || 'Discount'
+    showDiscountBadge(discountName)
   }
 }
 
