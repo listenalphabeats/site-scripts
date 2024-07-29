@@ -1,7 +1,3 @@
-const recaptchaDiv = document.querySelector(
-  `#wf-form-Newsletter-Popup .recaptcha-wrapper`
-)
-
 function toggleOnFormValidity(formId) {
   const form = document.getElementById(formId)
   const recaptchaDiv = document.querySelector(`#${formId} .recaptcha-wrapper`)
@@ -9,7 +5,7 @@ function toggleOnFormValidity(formId) {
   recaptchaDiv.style.display = form.checkValidity() ? 'flex' : 'none'
 }
 
-export function reCaptchaValidEmailForm(formId) {
+export function showRecaptchaOnValidForm(formId) {
   const emailInput = document.querySelector(`#${formId} input[type=email]`)
   const checkboxInput = document.querySelector(
     `#${formId} input[type=checkbox]`
@@ -18,4 +14,4 @@ export function reCaptchaValidEmailForm(formId) {
   checkboxInput.addEventListener('change', () => toggleOnFormValidity(formId))
 }
 
-window.reCaptchaValidEmailForm = reCaptchaValidEmailForm
+window.showRecaptchaOnValidForm = showRecaptchaOnValidForm
