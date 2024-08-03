@@ -1,24 +1,22 @@
 import { defineConfig } from 'vite'
 import { modifyOutputPlugin } from './utils/modify-output-plugin'
-import { logDistFilesPlugin } from './utils/log-dist-files-plugin'
 
 export default defineConfig({
   build: {
-    minify: false,
     rollupOptions: {
       input: {
-        main: 'src/main.js',
+        main: 'src/main.ts',
       },
       output: {
-        entryFileNames: '[name].js',
-        preserveModulesRoot: 'src',
-        preserveModules: true,
+        dir: 'dist',
+        entryFileNames: 'bundle.js',
+        format: 'es',
       },
       preserveEntrySignatures: 'strict',
       plugins: [modifyOutputPlugin()],
     },
   },
-  plugins: [modifyOutputPlugin(), logDistFilesPlugin()],
+  plugins: [modifyOutputPlugin()],
   server: {
     port: 3000,
   },

@@ -1,4 +1,4 @@
-function runWhenAvailable(
+export function runWhenAvailable(
   functionName,
   callback,
   interval = 100,
@@ -18,5 +18,3 @@ function runWhenAvailable(
 
   checkFunction()
 }
-
-window.runWhenAvailable = runWhenAvailable

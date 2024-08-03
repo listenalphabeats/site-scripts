@@ -6,13 +6,13 @@
   "scripts": {
     "dev": "vite & vite build --watch",
     "build": "vite build",
-    "tag": "node utils/tag-version.js"
+    "tag": "tsc --project ./ && node utils/tag-version.js"
   },
   "devDependencies": {
-    "chalk": "^5.3.0",
     "inquirer": "^10.0.4",
     "jsonfile": "^6.1.0",
     "simple-git": "^3.25.0",
+    "typescript": "^5.5.4",
     "vite": "^5.3.4"
   }
 }

@@ -1,3 +1,7 @@
+export enum BrowserCookies {
+  RewardfulReferral = 'rewardful.referral',
+}
+
 export type RewardfulBrowserCookie = {
   id: string // UUID
   created_at: string // timestamp

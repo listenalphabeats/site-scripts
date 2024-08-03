@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "ESNext",
+    "skipLibCheck": true,
+
+    "moduleResolution": "bundler",
+    "esModuleInterop": true,
+    "strictNullChecks": true,
+    "forceConsistentCasingInFileNames": true,
+    "baseUrl": ".",
+    "noEmit": true,
+    "typeRoots": ["./src/types"]
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"]
+}
