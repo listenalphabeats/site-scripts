@@ -1,9 +1,7 @@
-const NO_COOKIE_BANNER_PARAM = 'no-cookie-banner'
-
 export function conditionalCookieBanner() {
   const params = new URLSearchParams(window.location.search)
 
-  if (params.has(NO_COOKIE_BANNER_PARAM)) return
+  if (params.has('no-cookie-banner')) return
 
   /** Finsweet Cookie Consent script */
   const script = document.createElement('script')
