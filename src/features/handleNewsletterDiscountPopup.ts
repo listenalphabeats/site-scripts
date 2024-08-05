@@ -69,6 +69,10 @@ export function handleNewsletterDiscountPopup() {
     return
   }
 
+  if (!['/', '/product', '/shop'].includes(window.location.pathname)) {
+    return
+  }
+
   if (getCookie(BrowserCookies.RewardfulReferral)) {
     return
   }
