@@ -1,4 +1,5 @@
 import {
+  conditionalCookieBanner,
   handleNewsletterDiscountPopup,
   setSubmitBtnsDisabledAttr,
 } from './features'
@@ -12,6 +13,8 @@ export * from './product-page'
 window.addEventListener('load', () => {
   setSubmitBtnsDisabledAttr(true)
 })
+
+conditionalCookieBanner()
 
 document.addEventListener('DOMContentLoaded', () => {
   setSubmitBtnsDisabledAttr(true)
