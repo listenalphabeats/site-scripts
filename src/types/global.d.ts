@@ -7,5 +7,8 @@ declare global {
     posthog?: {
       getFeatureFlag(name: string): string
     }
+    grecaptcha?: {
+      execute(sitekey: string, opts?: { action?: string }): Promise<string>
+    }
   }
 }
