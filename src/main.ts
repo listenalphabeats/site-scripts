@@ -1,20 +1,11 @@
-import {
-  conditionalCookieBanner,
-  handleNewsletterDiscountPopup,
-} from './features'
-import { protectCIOFormsWithRecaptcha, runAfterConsentResolved } from './utils'
+import { conditionalCookieBanner, setSubmitBtnsDisabledAttr } from './features'
 
 export * from './utils'
 export * from './features'
 export * from './product-page'
 
 conditionalCookieBanner()
-protectCIOFormsWithRecaptcha()
 
 document.addEventListener('DOMContentLoaded', () => {
-  runAfterConsentResolved({
-    callback: handleNewsletterDiscountPopup,
-    fallback: handleNewsletterDiscountPopup,
-    timeout: 18000,
-  })
+  setSubmitBtnsDisabledAttr(true)
 })
