@@ -4,6 +4,7 @@
   "description": "Site scripts",
   "type": "module",
   "scripts": {
+    "webflow": "cat README.md && sleep 4 && open -a Safari 'https://webflow.com/dashboard/sites/staging-alphabeats/custom-code' && open -a Safari 'https://staging-alphabeats.design.webflow.com/?locale=en&pageId=66ab5bdeed97b37ed18be113'",
     "dev": "vite & vite build --watch",
     "build": "vite build",
     "tag": "tsc --project ./ && node utils/tag-version.js"

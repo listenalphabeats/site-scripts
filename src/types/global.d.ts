@@ -8,7 +8,10 @@ declare global {
       getFeatureFlag(name: string): string
     }
     grecaptcha?: {
-      execute(sitekey: string, opts?: { action?: string }): Promise<string>
+      enterprise: {
+        execute(sitekey: string, opts?: { action?: string }): Promise<string>
+        ready(callback: () => void): void
+      }
     }
   }
 }
