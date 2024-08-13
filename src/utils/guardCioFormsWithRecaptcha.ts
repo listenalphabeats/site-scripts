@@ -44,8 +44,11 @@ export function guardCioFormsWithRecaptcha() {
 
     const formData = Object.fromEntries(new FormData(form))
 
-    if (formData.email) {
-      formData.email = String(formData.email).toLowerCase()
+    const emailKeys = Object.keys(formData).filter(key => key.includes('email'))
+    if (emailKeys.length) {
+      emailKeys.forEach(
+        key => (formData[key] = String(formData[key]).toLowerCase())
+      )
     }
 
     recaptcha.ready(() => {
