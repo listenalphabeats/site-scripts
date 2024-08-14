@@ -101,6 +101,9 @@ function handleDiscountFn() {
   const newsletterPercentOff = Number(
     new URLSearchParams(newsletterParams || '').get('percentOff') || 0
   )
+  const newsletterAmountOff = Number(
+    new URLSearchParams(newsletterParams || '').get('amountOff') || 0
+  )
   const rewardfulPercentOff = rewardful?.coupon?.percent_off || 0
   const rewardfulAmountOff = rewardful?.coupon?.amount_off || 0
 
@@ -111,6 +114,7 @@ function handleDiscountFn() {
   const maxDiscount = Math.max(
     newsletterDiscount,
     rewardfulDiscount,
+    newsletterAmountOff,
     rewardfulAmountOff
   )
 
@@ -120,6 +124,13 @@ function handleDiscountFn() {
     applyDiscount(before, rewardfulAmountOff)
     discountBadgeDiv?.setAttribute('style', 'display: flex;')
     showDiscountBadge(rewardful?.coupon?.name || '')
+  } else if (newsletterAmountOff === maxDiscount) {
+    applyDiscount(before, newsletterAmountOff)
+    const discountName = new URLSearchParams(newsletterParams || '').get(
+      'discountName'
+    )
+    discountBadgeDiv?.setAttribute('style', 'display: flex;')
+    showDiscountBadge(discountName)
   } else {
     const discountMultiplier =
       1 - Math.max(newsletterPercentOff, rewardfulPercentOff) / 100
