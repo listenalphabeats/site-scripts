@@ -8,11 +8,11 @@ import {
 
 export function handleNewsletterDiscountPopup() {
   const NEWSLETTER_DISCOUNT_PARAMS =
-    'couponId=ZdKIcH6B&percentOff=10&discountName=10% Newsletter Discount'
-  const MODAL_ID = 'discount-modal'
-  const BACKDROP_ID = 'discount-modal-background'
-  const CLOSE_BTN_ID = 'discount-modal-close-button'
-  const FORM_ID = 'discount-form'
+    'couponId=FjYlGRQJ&amountOff=25&discountName=$25 Newsletter Discount'
+  const MODAL_ID = 'discount-modal-a'
+  const BACKDROP_ID = 'discount-modal-background-a'
+  const CLOSE_BTN_ID = 'discount-modal-close-button-a'
+  const FORM_ID = 'discount-form-a'
 
   const FORM_SUBMITTED_AT_STORAGE_ID = 'formSubmittedAt'
   const FORM_DISMISSED_AT_STORAGE_ID = 'formDismissedAt'
@@ -48,7 +48,7 @@ export function handleNewsletterDiscountPopup() {
 
     /** No redirect to /product on 'Continue browsing' */
     const successContinueBtn = document.querySelector(
-      '.popup-modal_success-message-wrapper a'
+      '#discount-form-a .popup-modal_success-message-wrapper a'
     )
     if (successContinueBtn) {
       successContinueBtn.removeAttribute('href')
