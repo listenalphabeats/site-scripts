@@ -15,6 +15,6 @@ document.addEventListener('DOMContentLoaded', () => {
   runAfterConsentResolved({
     callback: handleNewsletterDiscountPopup,
     fallback: handleNewsletterDiscountPopup,
-    timeout: 18000,
+    timeout: 4000,
   })
 })

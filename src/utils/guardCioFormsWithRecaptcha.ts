@@ -8,10 +8,38 @@ export function guardCioFormsWithRecaptcha() {
     : 'https://api.listenalphabeats.nl/v1/forms'
 
   const recaptchaScript = document.createElement('script')
+  recaptchaScript.async = true
   recaptchaScript.src = `https://www.google.com/recaptcha/enterprise.js?render=${RECAPTCHA_SITE_KEY}`
   document.head.appendChild(recaptchaScript)
 
+  function initBadgeVisibility() {
+    const badge = document.querySelector(
+      '.grecaptcha-badge'
+    ) as HTMLDivElement | null
+    if (badge) {
+      badge.style.right = '-100%'
+      setTimeout(() => {
+        badge.style.visibility = 'visible'
+      }, 400)
+    }
+  }
+
+  function setBadgePosition(state: 'visible' | 'hidden') {
+    const badge = document.querySelector(
+      '.grecaptcha-badge'
+    ) as HTMLDivElement | null
+    if (badge) {
+      console.debug('badge:', badge)
+      badge.style.right = { visible: '-186px', hidden: '-100%' }[state]
+    }
+  }
+
   let isSubmitting = false
+
+  function cleanup() {
+    isSubmitting = false
+    setBadgePosition('hidden')
+  }
 
   async function handleSubmit(event: SubmitEvent) {
     const form = event.target as HTMLFormElement
@@ -69,11 +97,11 @@ export function guardCioFormsWithRecaptcha() {
           return fetch(`${endpoint}/${cioFormId}/submit`, options)
         })
         .then(() => {
-          isSubmitting = false
+          cleanup()
         })
         .catch(error => {
           window.Sentry?.captureException(error)
-          isSubmitting = false
+          cleanup()
         })
 
       /** Replay native for Webflow submission and form state change. */
@@ -91,13 +119,22 @@ export function guardCioFormsWithRecaptcha() {
   /** Add global event listener for form submission */
   document.addEventListener('submit', event => {
     handleSubmit(event)
-    isSubmitting = false
+    cleanup()
   })
   window.addEventListener('load', function () {
+    initBadgeVisibility()
     ;[...document.forms].forEach(form => {
       form.addEventListener('submit', event => {
         handleSubmit(event)
       })
+      if (form.dataset.cioFormId) {
+        form.addEventListener('focusin', () => {
+          setBadgePosition('visible')
+        })
+        form.addEventListener('focusout', () =>
+          setTimeout(() => setBadgePosition('hidden'), 4000)
+        )
+      }
     })
   })
 }
