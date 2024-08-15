@@ -3,7 +3,6 @@ import {
   getCookie,
   isGooglebot,
   NEWSLETTER_DISCOUNT_PARAMS_STORAGE_ID,
-  runWhenPostHogIsReady,
 } from '../utils'
 
 export function handleNewsletterDiscountPopup() {
@@ -91,23 +90,7 @@ export function handleNewsletterDiscountPopup() {
     return
   }
 
-  /** SHOW MODAL */
-  const defaultDelay = 4000
-
-  function getFeatureFlag() {
-    return window.posthog?.getFeatureFlag('newsletter-discount-popup-timeout-2')
-  }
-
-  function callback() {
-    const delay = getFeatureFlag() === 'test-15sec-delay' ? 15000 : defaultDelay
-    setTimeout(showModal, delay)
-  }
-
-  function fallback() {
-    setTimeout(showModal, defaultDelay)
-  }
-
-  runWhenPostHogIsReady({ getFeatureFlag, callback, fallback })
+  setTimeout(showModal, 2000)
 
   /** Attach listeners */
   document.getElementById(FORM_ID)?.addEventListener('submit', submitForm)
