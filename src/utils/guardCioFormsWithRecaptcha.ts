@@ -37,6 +37,10 @@ export function guardCioFormsWithRecaptcha() {
     const recaptcha = window.grecaptcha?.enterprise
 
     if (!recaptcha?.execute) {
+      window.Sentry?.captureMessage(
+        'grecaptcha.enterprise.execute is not available',
+        'warning'
+      )
       return
     }
 
@@ -68,7 +72,7 @@ export function guardCioFormsWithRecaptcha() {
           isSubmitting = false
         })
         .catch(error => {
-          console.debug('Error:', error)
+          window.Sentry?.captureException(error)
           isSubmitting = false
         })
 

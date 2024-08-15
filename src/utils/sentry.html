@@ -1,0 +1,12 @@
+<script>
+  (function () {
+    const script = document.createElement('script')
+    script.crossorigin = "anonymous"
+    script.async = true
+    script.src = /** `website-dev/prod` */
+      window.location.host === 'staging-alphabeats.webflow.io'
+        ? 'https://js.sentry-cdn.com/f2763b970d80b36d36be42e167f95140.min.js'
+        : 'https://js.sentry-cdn.com/7df43afdf2f35440d6f008c872b9f5bc.min.js'
+    document.head.appendChild(script)
+  })();
+</script>

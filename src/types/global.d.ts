@@ -13,5 +13,13 @@ declare global {
         ready(callback: () => void): void
       }
     }
+    Sentry?: {
+      captureException(exception: any): string
+      captureMessage(
+        message: string,
+        captureContext?: // SeverityLevel
+        'fatal' | 'error' | 'warning' | 'log' | 'info' | 'debug'
+      ): string
+    }
   }
 }
