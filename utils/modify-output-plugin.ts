@@ -35,10 +35,22 @@ function restoreExportedFnNames(input: string): string {
     return { shortName, longName }
   })
 
-  // Replace short function names with long names
+  // Replace short function names with long names in the code
   let processedCode = input
   exportMappings.forEach(mapping => {
-    const functionNameRegex = new RegExp(`\\b${mapping.shortName}\\b`, 'g')
+    let functionNameRegex
+    if (/^[a-zA-Z_]\w*$/.test(mapping.shortName)) {
+      // If the short name is a valid identifier (letters, digits, underscores), use \b
+      functionNameRegex = new RegExp(`\\b${mapping.shortName}\\b`, 'g')
+    } else {
+      // Otherwise, treat it as a special character
+      const escapedShortName = mapping.shortName.replace(
+        /[-\/\\^$*+?.()|[\]{}]/g,
+        '\\$&'
+      )
+      functionNameRegex = new RegExp(`${escapedShortName}(?!\\w)`, 'g')
+    }
+
     processedCode = processedCode.replace(functionNameRegex, mapping.longName)
   })
 
