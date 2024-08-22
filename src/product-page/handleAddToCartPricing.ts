@@ -3,73 +3,84 @@ import { getNewsletterDiscountParams } from '../utils'
 export function handleAddToCartPricing() {
   const SIGN_UP_BASIC_URL = 'https://accounts.listenalphabeats.com/sign-up'
 
-  let plan = 'YEARLY' // Yearly plan by default
+  let plan = 'YEARLY'
   let paymentProvider = ''
+  let includeBrainbit = true
 
-  const annualButton = document.getElementById('plan-annual')
-  const monthlyButton = document.getElementById('plan-monthly')
-
-  const paymentUpfront = document.getElementById('payment-upfront')
-  const paymentKlarna = document.getElementById('payment-klarna')
-
-  const primaryButtonDesktop = document.getElementById(
-    'product-buy-primary-btn'
-  ) as HTMLAnchorElement | null
-  const primaryButtonMobile = document.getElementById(
-    'product-buy-primary-btn-mobile'
-  ) as HTMLAnchorElement | null
-
-  /** HELPERS =============================================== */
-  function setPlanYearly() {
-    plan = 'YEARLY'
-    paymentProvider = ''
-    monthlyButton?.classList.remove('active')
-    annualButton?.classList.add('active')
-    paymentKlarna?.classList.remove('disabled')
-    selectUpfront()
-    updatePrimaryButtonUrls()
-  }
-  function setPlanMonthly() {
-    plan = 'MONTHLY'
-    annualButton?.classList.remove('active')
-    monthlyButton?.classList.add('active')
-    paymentKlarna?.classList.add('disabled')
-    selectUpfront()
-    updatePrimaryButtonUrls()
-  }
-  function selectUpfront() {
-    paymentProvider = ''
-    paymentKlarna?.classList.remove('active')
-    paymentUpfront?.classList.add('active')
-    updatePrimaryButtonUrls()
-  }
-  function selectKlarna() {
-    paymentProvider = 'klarna'
-    paymentUpfront?.classList.remove('active')
-    paymentKlarna?.classList.add('active')
-    updatePrimaryButtonUrls()
+  const elements = {
+    annualButton: document.getElementById('plan-annual'),
+    monthlyButton: document.getElementById('plan-monthly'),
+    headbandYes: document.getElementById('headband-yes'),
+    headbandNo: document.getElementById('headband-no'),
+    paymentUpfront: document.getElementById('payment-upfront'),
+    paymentKlarna: document.getElementById('payment-klarna'),
+    annualFeatures: document.querySelectorAll('.annual-feature'),
+    primaryButtonDesktop: document.getElementById(
+      'product-buy-primary-btn'
+    ) as HTMLAnchorElement | null,
   }
 
-  function updatePrimaryButtonUrls() {
-    let url = SIGN_UP_BASIC_URL + '?plan=' + plan
+  function toggleActive(element, isActive) {
+    element?.classList[isActive ? 'add' : 'remove']('active')
+  }
+
+  function toggleDisplay(element, display) {
+    if (element) element.style.display = display ? 'flex' : 'none'
+  }
+
+  function updatePrimaryButtonUrl() {
+    let url = `${SIGN_UP_BASIC_URL}?plan=${plan}`
     const newsletterDiscountParams = getNewsletterDiscountParams()
 
-    if (newsletterDiscountParams) {
-      url += '&' + newsletterDiscountParams
-    }
+    if (newsletterDiscountParams) url += `&${newsletterDiscountParams}`
+    if (paymentProvider) url += `&paymentProvider=${paymentProvider}`
+    if (!includeBrainbit) url += '&includeBrainbit=false'
 
-    if (paymentProvider) {
-      url += '&paymentProvider=' + paymentProvider
-    }
-
-    if (primaryButtonDesktop) primaryButtonDesktop.href = url
-    if (primaryButtonMobile) primaryButtonMobile.href = url
+    if (elements.primaryButtonDesktop) elements.primaryButtonDesktop.href = url
   }
 
-  /** MAIN CODE ===================================================== */
-  annualButton?.addEventListener('click', setPlanYearly)
-  monthlyButton?.addEventListener('click', setPlanMonthly)
-  paymentUpfront?.addEventListener('click', selectUpfront)
-  paymentKlarna?.addEventListener('click', selectKlarna)
-  updatePrimaryButtonUrls()
+  function setPlan(isYearly) {
+    plan = isYearly ? 'YEARLY' : 'MONTHLY'
+    toggleActive(elements.annualButton, isYearly)
+    toggleActive(elements.monthlyButton, !isYearly)
+    elements.annualFeatures.forEach(el =>
+      toggleDisplay(
+        el,
+        isYearly && (el !== elements.paymentKlarna || includeBrainbit)
+      )
+    )
+    setPaymentUpfront()
+  }
+
+  function setBrainbit(included) {
+    includeBrainbit = included
+    toggleActive(elements.headbandYes, included)
+    toggleActive(elements.headbandNo, !included)
+    if (elements.paymentKlarna)
+      toggleDisplay(elements.paymentKlarna, included && plan !== 'MONTHLY')
+    setPaymentUpfront()
+  }
+
+  function setPaymentUpfront() {
+    paymentProvider = ''
+    toggleActive(elements.paymentUpfront, true)
+    toggleActive(elements.paymentKlarna, false)
+    updatePrimaryButtonUrl()
+  }
+
+  function setPaymentKlarna() {
+    paymentProvider = 'klarna'
+    toggleActive(elements.paymentUpfront, false)
+    toggleActive(elements.paymentKlarna, true)
+    updatePrimaryButtonUrl()
+  }
+
+  elements.annualButton?.addEventListener('click', () => setPlan(true))
+  elements.monthlyButton?.addEventListener('click', () => setPlan(false))
+  elements.headbandYes?.addEventListener('click', () => setBrainbit(true))
+  elements.headbandNo?.addEventListener('click', () => setBrainbit(false))
+  elements.paymentUpfront?.addEventListener('click', setPaymentUpfront)
+  elements.paymentKlarna?.addEventListener('click', setPaymentKlarna)
+
+  updatePrimaryButtonUrl()
 }
