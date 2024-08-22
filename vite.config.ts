@@ -1,5 +1,4 @@
 import { defineConfig } from 'vite'
-import { modifyOutputPlugin } from './utils/modify-output-plugin'
 
 export default defineConfig({
   build: {
@@ -10,13 +9,12 @@ export default defineConfig({
       output: {
         dir: 'dist',
         entryFileNames: 'bundle.js',
-        format: 'es',
+        format: 'iife',
+        name: 'ab',
       },
       preserveEntrySignatures: 'strict',
-      plugins: [modifyOutputPlugin()],
     },
   },
-  plugins: [modifyOutputPlugin()],
   server: {
     port: 3000,
   },
