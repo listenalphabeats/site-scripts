@@ -1,2 +1,1 @@
-export * from './handleDiscount'
-export * from './handleAddToCartPricing'
+export * from './handleCartWithDiscount'

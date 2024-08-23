@@ -1,9 +1,10 @@
+import { isStaging } from './isStaging'
+
 export function guardCioFormsWithRecaptcha() {
-  const isStaging = window.location.host === 'staging-alphabeats.webflow.io'
-  const RECAPTCHA_SITE_KEY = isStaging
+  const RECAPTCHA_SITE_KEY = isStaging()
     ? '6LcapSQqAAAAAOeM26drG-7e7aEq3Vj6e55WZtEg'
     : '6Ld69iQqAAAAAOG5DHH8-UHywMnTBpgptTbQWDUb'
-  const endpoint = isStaging
+  const endpoint = isStaging()
     ? 'https://api.development.listenalphabeats.nl/v1/forms'
     : 'https://api.listenalphabeats.nl/v1/forms'
 
@@ -29,7 +30,6 @@ export function guardCioFormsWithRecaptcha() {
       '.grecaptcha-badge'
     ) as HTMLDivElement | null
     if (badge) {
-      console.debug('badge:', badge)
       badge.style.right = { visible: '-186px', hidden: '-100%' }[state]
     }
   }

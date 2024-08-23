@@ -1,6 +1,7 @@
 import { BrowserCookies, RewardfulBrowserCookie } from '../types'
 import { getCookie, getNewsletterDiscountParams } from '../utils'
 
+/** @deprecated */
 export function handleDiscount() {
   /** Wait for Rewardful cookie */
   setTimeout(() => handleDiscountFn(), 400)

@@ -1,5 +1,6 @@
 import { getNewsletterDiscountParams } from '../utils'
 
+/** @deprecated */
 export function handleAddToCartPricing() {
   const SIGN_UP_BASIC_URL = 'https://accounts.listenalphabeats.com/sign-up'
 
