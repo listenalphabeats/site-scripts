@@ -105,18 +105,22 @@ export function handleCartWithDiscount() {
     let discountBadgeTitle = ''
     if (rewardfulAmountOff === maxDiscount) {
       discountBadgeTitle = rewardful?.coupon?.name || ''
+      if (discountBadgeTitle)
+        discountBadgeTitle += ' will be applied at checkout'
     } else if (newsletterAmountOff === maxDiscount) {
       const discountName = new URLSearchParams(newsletterParams || '').get(
         'discountName'
       )
       discountBadgeTitle = discountName || ''
+      if (discountBadgeTitle)
+        discountBadgeTitle += ' will be applied at checkout'
     } else {
       const discountName =
         (newsletterPercentOff > rewardfulPercentOff
           ? new URLSearchParams(newsletterParams || '').get('discountName')
           : rewardful?.coupon?.name) || 'Discount'
 
-      discountBadgeTitle = discountName || ''
+      discountBadgeTitle = discountName
 
       const multiplier =
         1 - Math.max(newsletterPercentOff, rewardfulPercentOff) / 100
