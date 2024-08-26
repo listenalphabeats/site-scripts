@@ -2,12 +2,13 @@ import { BrowserCookies } from '../types'
 import {
   getCookie,
   isGooglebot,
+  isStaging,
   NEWSLETTER_DISCOUNT_PARAMS_STORAGE_ID,
 } from '../utils'
 
 export function handleNewsletterDiscountPopup() {
-  const NEWSLETTER_DISCOUNT_PARAMS =
-    'couponId=FjYlGRQJ&amountOff=25&discountName=$25 Newsletter Discount'
+  const couponId = isStaging() ? '8ENDZLrc' : 'FynlZTlc'
+  const NEWSLETTER_DISCOUNT_PARAMS = `couponId=${couponId}&amountOff=25&discountName=$25 Off Annual Plan`
   const MODAL_ID = 'discount-modal-a'
   const BACKDROP_ID = 'discount-modal-background-a'
   const CLOSE_BTN_ID = 'discount-modal-close-button-a'

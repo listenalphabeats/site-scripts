@@ -105,15 +105,18 @@ export function handleCartWithDiscount() {
     let discountBadgeTitle = ''
     if (rewardfulAmountOff === maxDiscount) {
       discountBadgeTitle = rewardful?.coupon?.name || ''
-      if (discountBadgeTitle)
-        discountBadgeTitle += ' will be applied at checkout'
     } else if (newsletterAmountOff === maxDiscount) {
       const discountName = new URLSearchParams(newsletterParams || '').get(
         'discountName'
       )
       discountBadgeTitle = discountName || ''
-      if (discountBadgeTitle)
-        discountBadgeTitle += ' will be applied at checkout'
+      /** Handle `$25 Off Annual Plan` discount */
+      pricing.annual.price -= newsletterAmountOff
+      updatePrice(
+        elements.annualButton,
+        pricing.annual.strikedPrice,
+        pricing.annual.price
+      )
     } else {
       const discountName =
         (newsletterPercentOff > rewardfulPercentOff
@@ -156,7 +159,8 @@ export function handleCartWithDiscount() {
       let url = `${SIGN_UP_BASIC_URL}?plan=${plan}`
       const newsletterDiscountParams = getNewsletterDiscountParams()
 
-      if (newsletterDiscountParams) url += `&${newsletterDiscountParams}`
+      if (newsletterDiscountParams && plan === 'YEARLY')
+        url += `&${newsletterDiscountParams}`
       if (paymentProvider) url += `&paymentProvider=${paymentProvider}`
       if (!includeBrainbit) url += '&includeBrainbit=false'
 
