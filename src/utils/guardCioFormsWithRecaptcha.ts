@@ -6,7 +6,7 @@ export function guardCioFormsWithRecaptcha() {
     : '6Ld69iQqAAAAAOG5DHH8-UHywMnTBpgptTbQWDUb'
   const endpoint = isStaging()
     ? 'https://api.development.listenalphabeats.nl/v1/forms'
-    : 'https://api.listenalphabeats.nl/v1/forms'
+    : 'https://api.listenalphabeats.com/v1/forms'
 
   const recaptchaScript = document.createElement('script')
   recaptchaScript.async = true
