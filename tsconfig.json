@@ -8,7 +8,6 @@
     "esModuleInterop": true,
     "strictNullChecks": true,
     "forceConsistentCasingInFileNames": true,
-    "baseUrl": ".",
     "noEmit": true,
     "typeRoots": ["./src/types"]
   },
