@@ -2,7 +2,11 @@ import {
   conditionalCookieBanner,
   handleNewsletterDiscountPopup,
 } from './features'
-import { guardCioFormsWithRecaptcha, runAfterConsentResolved } from './utils'
+import {
+  getPartnerNameInStorage,
+  guardCioFormsWithRecaptcha,
+  runAfterConsentResolved,
+} from './utils'
 
 export * from './utils'
 export * from './features'
@@ -12,6 +16,10 @@ conditionalCookieBanner()
 guardCioFormsWithRecaptcha()
 
 document.addEventListener('DOMContentLoaded', () => {
+  if (getPartnerNameInStorage()) {
+    return
+  }
+
   runAfterConsentResolved({
     callback: handleNewsletterDiscountPopup,
     fallback: handleNewsletterDiscountPopup,
