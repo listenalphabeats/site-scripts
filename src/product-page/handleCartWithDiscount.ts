@@ -1,7 +1,19 @@
 import { BrowserCookies, RewardfulBrowserCookie } from '../types'
-import { getCookie, getNewsletterDiscountParams, isStaging } from '../utils'
+import {
+  getCookie,
+  getNewsletterDiscountParams,
+  getPartnerNameInStorage,
+  isStaging,
+  redirectToPartnerPage,
+} from '../utils'
 
 export function handleCartWithDiscount() {
+  const partner = getPartnerNameInStorage()
+  if (partner) {
+    redirectToPartnerPage(partner)
+    return
+  }
+
   /** Wait for Rewardful cookie */
   setTimeout(() => {
     updatePrices()
