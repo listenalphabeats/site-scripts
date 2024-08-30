@@ -17,13 +17,13 @@ export function handlePartnerLanding() {
 
   if (!window.location.pathname.includes(`/${PARTNERS_PATH}/`)) return
 
-  type HtmlEl = HTMLAnchorElement | null
-
-  const paymentUpfrontEl = document.getElementById('payment-upfront') as HtmlEl
-  const paymentKlarnaEl = document.getElementById('payment-klarna') as HtmlEl
-  const primaryCtaBtn = document.getElementById(
-    'product-buy-primary-btn'
-  ) as HtmlEl
+  const paymentUpfrontElements =
+    document.querySelectorAll<HTMLAnchorElement>('#payment-upfront')
+  const paymentKlarnaElements =
+    document.querySelectorAll<HTMLAnchorElement>('#payment-klarna')
+  const primaryCtaBtns = document.querySelectorAll<HTMLAnchorElement>(
+    '#product-buy-primary-btn'
+  )
 
   function initPartner() {
     const name = window.location.pathname.split(`/${PARTNERS_PATH}/`)[1]
@@ -58,25 +58,29 @@ export function handlePartnerLanding() {
       ['discountName', partnerAttrs.discountName],
     ])
     if (paymentProvider) params.append('paymentProvider', paymentProvider)
-    if (primaryCtaBtn) primaryCtaBtn.href = `${url}?${params}`
+    primaryCtaBtns.forEach(el => (el.href = `${url}?${params}`))
   }
 
   function setPaymentUpfront() {
     paymentProvider = ''
-    toggleActive(paymentUpfrontEl, true)
-    toggleActive(paymentKlarnaEl, false)
+    paymentUpfrontElements.forEach(el => toggleActive(el, true))
+    paymentKlarnaElements.forEach(el => toggleActive(el, false))
     updatePrimaryButtonUrl()
   }
 
   function setPaymentKlarna() {
     paymentProvider = 'klarna'
-    toggleActive(paymentUpfrontEl, false)
-    toggleActive(paymentKlarnaEl, true)
+    paymentUpfrontElements.forEach(el => toggleActive(el, false))
+    paymentKlarnaElements.forEach(el => toggleActive(el, true))
     updatePrimaryButtonUrl()
   }
 
-  paymentUpfrontEl?.addEventListener('click', setPaymentUpfront)
-  paymentKlarnaEl?.addEventListener('click', setPaymentKlarna)
+  paymentUpfrontElements.forEach(el =>
+    el.addEventListener('click', setPaymentUpfront)
+  )
+  paymentKlarnaElements.forEach(el =>
+    el.addEventListener('click', setPaymentKlarna)
+  )
 
   updatePrimaryButtonUrl()
 }
