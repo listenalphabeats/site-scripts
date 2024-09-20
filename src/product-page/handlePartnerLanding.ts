@@ -4,7 +4,8 @@ export function handlePartnerLanding() {
   type PartnerAttrs = {
     discountName: string
     couponId: string
-    amountOff: string
+    amountOff?: string
+    percentOff?: string
   }
 
   const partners: Record<string, PartnerAttrs> = {
@@ -12,6 +13,11 @@ export function handlePartnerLanding() {
       discountName: 'Amaze Creator Bundle discount',
       couponId: isStaging() ? 'YiM3PNXT' : 'Gu2jGXBe',
       amountOff: '199',
+    },
+    usat: {
+      discountName: 'USAT 15% Off',
+      couponId: isStaging() ? 'YcvRrNe2' : '9xjBd0Rf',
+      percentOff: '15',
     },
   }
 
@@ -54,9 +60,13 @@ export function handlePartnerLanding() {
     const params = new URLSearchParams([
       ['partner', partnerName],
       ['couponId', partnerAttrs.couponId],
-      ['amountOff', partnerAttrs.amountOff],
       ['discountName', partnerAttrs.discountName],
     ])
+    if (partnerAttrs.amountOff) {
+      params.append('amountOff', partnerAttrs.amountOff)
+    } else if (partnerAttrs.percentOff) {
+      params.append('percentOff', partnerAttrs.percentOff)
+    }
     if (paymentProvider) params.append('paymentProvider', paymentProvider)
     primaryCtaBtns.forEach(el => (el.href = `${url}?${params}`))
   }
