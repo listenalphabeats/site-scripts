@@ -1,6 +1,6 @@
 {
   "name": "site-scripts",
-  "version": "1.0.31",
+  "version": "1.0.32",
   "description": "Site scripts",
   "type": "module",
   "scripts": {
