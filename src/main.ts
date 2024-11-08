@@ -1,12 +1,5 @@
-import {
-  conditionalCookieBanner,
-  handleNewsletterDiscountPopup,
-} from './features'
-import {
-  getPartnerNameInStorage,
-  guardCioFormsWithRecaptcha,
-  runAfterConsentResolved,
-} from './utils'
+import { conditionalCookieBanner } from './features'
+import { getPartnerNameInStorage, guardCioFormsWithRecaptcha } from './utils'
 
 export * from './utils'
 export * from './features'
@@ -20,9 +13,13 @@ document.addEventListener('DOMContentLoaded', () => {
     return
   }
 
-  runAfterConsentResolved({
-    callback: handleNewsletterDiscountPopup,
-    fallback: handleNewsletterDiscountPopup,
-    timeout: 4000,
-  })
+  /**
+   * No popup during Black Friday.
+   * Uncomment/cleanup next.
+   */
+  // runAfterConsentResolved({
+  //   callback: handleNewsletterDiscountPopup,
+  //   fallback: handleNewsletterDiscountPopup,
+  //   timeout: 4000,
+  // })
 })
