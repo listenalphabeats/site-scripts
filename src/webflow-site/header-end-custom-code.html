@@ -195,7 +195,17 @@
 </script>
 <!-- [External Scripts by Digital Sparks] -->
 
-<script defer src="https://cdn.jsdelivr.net/gh/listenalphabeats/site-scripts@1.0.32/dist/bundle.js"></script>
+<script>
+  (function () {
+    const script = document.createElement('script')
+    script.defer = true
+    script.src =
+      window.location.host === 'staging-alphabeats.webflow.io'
+        ? 'https://cdn.jsdelivr.net/gh/listenalphabeats/site-scripts@1.0.33/dist/bundle.js'
+        : 'https://cdn.jsdelivr.net/gh/listenalphabeats/site-scripts@1.0.32/dist/bundle.js'
+    document.head.appendChild(script)
+  })();
+</script>
 
 <script>
   (function () {
