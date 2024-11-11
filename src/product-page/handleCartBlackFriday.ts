@@ -23,6 +23,9 @@ export function handleCartBlackFriday() {
       amountOff: '70',
       ctaTitle: 'Order now',
     },
+    [BundleType.SUBSCRIPTION_ONLY + '-monthly']: {
+      ctaTitle: 'Order now',
+    },
     [BundleType.MUSE]: {
       discountName: 'Black Friday discount',
       couponId: isStaging() ? '9oEGjT70' : 'hryuMkbo',
@@ -42,6 +45,9 @@ export function handleCartBlackFriday() {
   const elements = {
     subscriptionOnly: document.getElementById(
       BundleType.SUBSCRIPTION_ONLY
+    ) as HtmlAEl,
+    subscriptionOnlyMonthly: document.getElementById(
+      BundleType.SUBSCRIPTION_ONLY + '-monthly'
     ) as HtmlAEl,
     bundleMuse: document.getElementById('bundle-' + BundleType.MUSE) as HtmlAEl,
     bundleBrainbit: document.getElementById(
@@ -64,6 +70,7 @@ export function handleCartBlackFriday() {
 
   function handleCartChange() {
     let bundleType = BundleType.SUBSCRIPTION_ONLY
+    let plan = 'YEARLY'
     let paymentProvider = ''
 
     function setActive(element, isActive) {
@@ -81,10 +88,15 @@ export function handleCartBlackFriday() {
 
       const params = new URLSearchParams([
         ['bundleType', bundleType],
-        ['discountName', bundles[bundleType].discountName],
-        ['amountOff', bundles[bundleType].amountOff],
-        ['couponId', bundles[bundleType].couponId],
+        ['plan', plan],
       ])
+
+      const { discountName, amountOff, couponId } =
+        plan === 'MONTHLY' ? {} : bundles[bundleType]
+
+      if (discountName) params.append('discountName', discountName)
+      if (amountOff) params.append('amountOff', amountOff)
+      if (couponId) params.append('couponId', couponId)
 
       if (paymentProvider) params.append('paymentProvider', paymentProvider)
 
@@ -96,6 +108,7 @@ export function handleCartBlackFriday() {
 
     function setSubscriptionOnly() {
       bundleType = BundleType.SUBSCRIPTION_ONLY
+      plan = 'YEARLY'
 
       paymentProvider = ''
       setDisplay(elements.paymentKlarna, false)
@@ -105,6 +118,25 @@ export function handleCartBlackFriday() {
       setDisplay(elements.shippingBrainbit, false)
 
       setActive(elements.subscriptionOnly, true)
+      setActive(elements.subscriptionOnlyMonthly, false)
+      setActive(elements.bundleBrainbit, false)
+      setActive(elements.bundleMuse, false)
+      updatePrimaryButtonUrl()
+    }
+
+    function setSubscriptionOnlyMonthly() {
+      bundleType = BundleType.SUBSCRIPTION_ONLY
+      plan = 'MONTHLY'
+
+      paymentProvider = ''
+      setDisplay(elements.paymentKlarna, false)
+      setPaymentUpfront()
+
+      setDisplay(elements.shippingMuse, false)
+      setDisplay(elements.shippingBrainbit, false)
+
+      setActive(elements.subscriptionOnly, false)
+      setActive(elements.subscriptionOnlyMonthly, true)
       setActive(elements.bundleBrainbit, false)
       setActive(elements.bundleMuse, false)
       updatePrimaryButtonUrl()
@@ -112,12 +144,14 @@ export function handleCartBlackFriday() {
 
     function setBundleMuse() {
       bundleType = BundleType.MUSE
+      plan = 'YEARLY'
       setDisplay(elements.paymentKlarna, true)
 
       setDisplay(elements.shippingMuse, true)
       setDisplay(elements.shippingBrainbit, false)
 
       setActive(elements.subscriptionOnly, false)
+      setActive(elements.subscriptionOnlyMonthly, false)
       setActive(elements.bundleBrainbit, false)
       setActive(elements.bundleMuse, true)
       updatePrimaryButtonUrl()
@@ -125,12 +159,14 @@ export function handleCartBlackFriday() {
 
     function setBundleBrainbit() {
       bundleType = BundleType.BRAINBIT
+      plan = 'YEARLY'
       setDisplay(elements.paymentKlarna, true)
 
       setDisplay(elements.shippingMuse, false)
       setDisplay(elements.shippingBrainbit, true)
 
       setActive(elements.subscriptionOnly, false)
+      setActive(elements.subscriptionOnlyMonthly, false)
       setActive(elements.bundleBrainbit, true)
       setActive(elements.bundleMuse, false)
       updatePrimaryButtonUrl()
@@ -151,12 +187,17 @@ export function handleCartBlackFriday() {
     }
 
     elements.subscriptionOnly?.addEventListener('click', setSubscriptionOnly)
+    elements.subscriptionOnlyMonthly?.addEventListener(
+      'click',
+      setSubscriptionOnlyMonthly
+    )
     elements.bundleMuse?.addEventListener('click', setBundleMuse)
     elements.bundleBrainbit?.addEventListener('click', setBundleBrainbit)
 
     elements.paymentUpfront?.addEventListener('click', setPaymentUpfront)
     elements.paymentKlarna?.addEventListener('click', setPaymentKlarna)
 
+    setSubscriptionOnly()
     updatePrimaryButtonUrl()
   }
 }
