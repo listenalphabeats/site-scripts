@@ -21,5 +21,6 @@ declare global {
         'fatal' | 'error' | 'warning' | 'log' | 'info' | 'debug'
       ): string
     }
+    Swiper?: any
   }
 }

@@ -43,6 +43,16 @@ export function handleCartBlackFriday() {
   type HtmlAEl = HTMLAnchorElement | null
 
   const elements = {
+    imageSetDefault: document.getElementById(
+      'default-product-image-carousel'
+    ) as HtmlAEl,
+    imageSetMuse: document.getElementById(
+      BundleType.MUSE + '-product-image-carousel'
+    ) as HtmlAEl,
+    imageSetBrainbit: document.getElementById(
+      BundleType.BRAINBIT + '-product-image-carousel'
+    ) as HtmlAEl,
+
     subscriptionOnly: document.getElementById(
       BundleType.SUBSCRIPTION_ONLY
     ) as HtmlAEl,
@@ -110,6 +120,10 @@ export function handleCartBlackFriday() {
       bundleType = BundleType.SUBSCRIPTION_ONLY
       plan = 'YEARLY'
 
+      setDisplay(elements.imageSetDefault, true)
+      setDisplay(elements.imageSetMuse, false)
+      setDisplay(elements.imageSetBrainbit, false)
+
       paymentProvider = ''
       setDisplay(elements.paymentKlarna, false)
       setPaymentUpfront()
@@ -127,6 +141,10 @@ export function handleCartBlackFriday() {
     function setSubscriptionOnlyMonthly() {
       bundleType = BundleType.SUBSCRIPTION_ONLY
       plan = 'MONTHLY'
+
+      setDisplay(elements.imageSetDefault, true)
+      setDisplay(elements.imageSetMuse, false)
+      setDisplay(elements.imageSetBrainbit, false)
 
       paymentProvider = ''
       setDisplay(elements.paymentKlarna, false)
@@ -147,6 +165,10 @@ export function handleCartBlackFriday() {
       plan = 'YEARLY'
       setDisplay(elements.paymentKlarna, true)
 
+      setDisplay(elements.imageSetDefault, false)
+      setDisplay(elements.imageSetMuse, true)
+      setDisplay(elements.imageSetBrainbit, false)
+
       setDisplay(elements.shippingMuse, true)
       setDisplay(elements.shippingBrainbit, false)
 
@@ -161,6 +183,10 @@ export function handleCartBlackFriday() {
       bundleType = BundleType.BRAINBIT
       plan = 'YEARLY'
       setDisplay(elements.paymentKlarna, true)
+
+      setDisplay(elements.imageSetDefault, false)
+      setDisplay(elements.imageSetMuse, false)
+      setDisplay(elements.imageSetBrainbit, true)
 
       setDisplay(elements.shippingMuse, false)
       setDisplay(elements.shippingBrainbit, true)
