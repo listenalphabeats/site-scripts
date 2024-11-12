@@ -1,20 +1,4 @@
-<script>
-  (function () {
-    const script = document.createElement('script')
-    script.defer = true
-    script.src =
-      window.location.host === 'staging-alphabeats.webflow.io'
-        ? 'https://cdn.jsdelivr.net/gh/listenalphabeats/site-scripts@1.0.35/dist/bundle.js'
-        : 'https://cdn.jsdelivr.net/gh/listenalphabeats/site-scripts@1.0.35/dist/bundle.js'
-    document.head.appendChild(script)
-  })();
-</script>
-
 ```html
-<!--
-<script defer src="https://cdn.jsdelivr.net/gh/listenalphabeats/site-scripts@1.0.35/dist/bundle.js"></script>
--->
-
 <script>
   const script = document.createElement('script')
   script.defer = true

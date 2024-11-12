@@ -47,11 +47,7 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-    if (window.location.host === 'staging-alphabeats.webflow.io') {
-      ab?.handleCartBlackFriday?.();
-      ab?.handleImageCarousel?.();
-    } else {
-      ab?.handleCartWithDiscount?.();
-    }
+    ab?.handleCartBlackFriday?.();
+    ab?.handleImageCarousel?.();
   }); 
 </script>
