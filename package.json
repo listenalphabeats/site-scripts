@@ -13,6 +13,7 @@
     "inquirer": "^10.0.4",
     "jsonfile": "^6.1.0",
     "simple-git": "^3.25.0",
+    "swiper": "^11.1.14",
     "typescript": "^5.5.4",
     "vite": "^5.3.4"
   }
