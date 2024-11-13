@@ -1,4 +1,5 @@
-import { FinsweetCookieConsent } from './FinsweetCookieConsent.type'
+import type { FinsweetCookieConsent } from './FinsweetCookieConsent.type'
+import type { Swiper } from 'swiper/types'
 
 declare global {
   interface Window {
@@ -21,6 +22,6 @@ declare global {
         'fatal' | 'error' | 'warning' | 'log' | 'info' | 'debug'
       ): string
     }
-    Swiper?: any
+    Swiper?: typeof Swiper
   }
 }
