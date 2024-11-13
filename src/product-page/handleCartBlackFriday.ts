@@ -101,12 +101,12 @@ export function handleCartBlackFriday() {
         ['plan', plan],
       ])
 
-      const { discountName, amountOff, couponId } =
-        plan === 'MONTHLY' ? {} : bundles[bundleType]
-
-      if (discountName) params.append('discountName', discountName)
-      if (amountOff) params.append('amountOff', amountOff)
-      if (couponId) params.append('couponId', couponId)
+      if (plan === 'YEARLY') {
+        const { discountName, amountOff, couponId } = bundles[bundleType]
+        if (discountName) params.append('discountName', discountName)
+        if (amountOff) params.append('amountOff', amountOff)
+        if (couponId) params.append('couponId', couponId)
+      }
 
       if (paymentProvider) params.append('paymentProvider', paymentProvider)
 
