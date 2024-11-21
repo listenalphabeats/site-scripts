@@ -1,17 +1,7 @@
 import { BundleType } from '../types'
-import {
-  getPartnerNameInStorage,
-  isStaging,
-  redirectToPartnerPage,
-} from '../utils'
+import { isStaging } from '../utils'
 
 export function handleCartBlackFriday() {
-  const partner = getPartnerNameInStorage()
-  if (partner) {
-    redirectToPartnerPage(partner)
-    return
-  }
-
   setTimeout(() => {
     handleCartChange()
   }, 200)
