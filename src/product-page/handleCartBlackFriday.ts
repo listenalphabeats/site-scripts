@@ -1,10 +1,15 @@
+import { MUSE_IN_BOX_TRIAL_SEARCH_PARAM } from '../config'
 import { BundleType } from '../types'
 import { isStaging } from '../utils'
 
 export function handleCartBlackFriday() {
-  setTimeout(() => {
-    handleCartChange()
-  }, 200)
+  function setActive(element, isActive) {
+    element?.classList[isActive ? 'add' : 'remove']('active')
+  }
+
+  function setDisplay(element, display) {
+    if (element) element.style.display = display ? 'flex' : 'none'
+  }
 
   const bundles = {
     [BundleType.SUBSCRIPTION_ONLY]: {
@@ -68,37 +73,55 @@ export function handleCartBlackFriday() {
     ) as HtmlAEl,
   }
 
+  function handleMuseInBoxBadge() {
+    const requestParams = new URLSearchParams(window.location.search)
+    if (!requestParams.has(MUSE_IN_BOX_TRIAL_SEARCH_PARAM)) return
+    const badgeAnnualSubDefault = document.getElementById(
+      'badge-annual-sub-offer'
+    )
+    const badgeAnnualSubMonthTrial = document.getElementById(
+      'badge-annual-sub-month-trial'
+    )
+
+    setDisplay(badgeAnnualSubDefault, false)
+    setDisplay(badgeAnnualSubMonthTrial, true)
+  }
+
   function handleCartChange() {
     let bundleType = BundleType.SUBSCRIPTION_ONLY
     let plan = 'YEARLY'
     let paymentProvider = ''
-
-    function setActive(element, isActive) {
-      element?.classList[isActive ? 'add' : 'remove']('active')
-    }
-
-    function setDisplay(element, display) {
-      if (element) element.style.display = display ? 'flex' : 'none'
-    }
 
     function updatePrimaryButtonUrl() {
       const url = isStaging()
         ? 'https://accounts.development.listenalphabeats.nl/sign-up'
         : 'https://accounts.listenalphabeats.com/sign-up'
 
-      const params = new URLSearchParams([
+      let params = new URLSearchParams([
         ['bundleType', bundleType],
         ['plan', plan],
       ])
+
+      if (paymentProvider) params.append('paymentProvider', paymentProvider)
 
       if (plan === 'YEARLY') {
         const { discountName, amountOff, couponId } = bundles[bundleType]
         if (discountName) params.append('discountName', discountName)
         if (amountOff) params.append('amountOff', amountOff)
         if (couponId) params.append('couponId', couponId)
-      }
 
-      if (paymentProvider) params.append('paymentProvider', paymentProvider)
+        /** Handle Muse In Box 1m Trial */
+        const requestParams = new URLSearchParams(window.location.search)
+        if (
+          bundleType === BundleType.SUBSCRIPTION_ONLY &&
+          requestParams.has(MUSE_IN_BOX_TRIAL_SEARCH_PARAM)
+        ) {
+          params = new URLSearchParams([
+            ['bundleType', BundleType.MUSE_IN_BOX],
+            ['discountName', 'Muse 1-month free trial included'],
+          ])
+        }
+      }
 
       if (elements.primaryBuyButton) {
         elements.primaryBuyButton.href = `${url}?${params}`
@@ -216,4 +239,7 @@ export function handleCartBlackFriday() {
     setSubscriptionOnly()
     updatePrimaryButtonUrl()
   }
+
+  handleCartChange()
+  handleMuseInBoxBadge()
 }
