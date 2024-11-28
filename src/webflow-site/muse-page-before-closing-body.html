@@ -1,46 +1,11 @@
 <script>
-  // auto rotating tabs
-  var Webflow = Webflow || [];
-
-  Webflow.push(function () {
-    var tabTimeout;
-
-    function tabLoop() {
-      tabTimeout = setTimeout(function () {
-        var $next = $('.tabs-vertical_menu').children('.w--current:first').next();
-        if ($next.length) {
-          if ($(".menu-button").hasClass("w--open")) {
-            tabLoop();
-          } else {
-            $next.removeAttr("href").click();
-          }
-        } else {
-          if ($(".menu-button").hasClass("w--open")) {
-            tabLoop();
-          } else {
-            $('.tabs-vertical_tab-link:first').removeAttr("href").click();
-          }
-        }
-      }, 10000); // 10 seconds
+  document.addEventListener('DOMContentLoaded', () => {
+    if (window.ab?.handleMuseInBoxOffer instanceof Function) {
+      window.ab.handleMuseInBoxOffer();
+    } else {
+      const message = 'Required function handleMuseInBoxOffer is not available'
+      window.Sentry?.captureMessage(message, 'warning')
+      console.warn(message)
     }
-
-    $('.tabs-vertical_tab-link').click(function () {
-      clearTimeout(tabTimeout);
-      tabLoop();
-    });
-
-    // Intersection Observer to trigger tabLoop when section is in view
-    var observer = new IntersectionObserver(function (entries) {
-      if (entries[0].isIntersecting) {
-        clearTimeout(tabTimeout); // Ensure no duplicate timers
-        tabLoop(); // Start auto-rotation when section is in view
-        observer.unobserve(entries[0].target); // Stop observing after it runs once
-      }
-    }, {
-      threshold: 0.5 // Adjust this threshold based on when you want the animation to start
-    });
-
-    // Start observing the section containing the tabs
-    observer.observe(document.querySelector('.section_tabs'));
-  });
+  }); 
 </script>
