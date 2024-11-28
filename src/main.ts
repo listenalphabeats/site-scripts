@@ -4,7 +4,7 @@ import { getPartnerNameInStorage, guardCioFormsWithRecaptcha } from './utils'
 export * from './utils'
 export * from './features'
 export * from './product-page'
-
+export * from './muse-page'
 conditionalCookieBanner()
 guardCioFormsWithRecaptcha()
 
