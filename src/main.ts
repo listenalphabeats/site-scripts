@@ -9,17 +9,15 @@ conditionalCookieBanner()
 guardCioFormsWithRecaptcha()
 
 document.addEventListener('DOMContentLoaded', () => {
-  if (getPartnerNameInStorage()) {
-    return
-  }
-
   /**
    * No popup during Black Friday.
    * Uncomment/cleanup next.
    */
+  // if (!getPartnerNameInStorage()) {
   // runAfterConsentResolved({
   //   callback: handleNewsletterDiscountPopup,
   //   fallback: handleNewsletterDiscountPopup,
   //   timeout: 4000,
   // })
+  // }
 })
