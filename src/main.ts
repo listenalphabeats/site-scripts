@@ -1,5 +1,5 @@
 import { conditionalCookieBanner } from './features'
-import { getPartnerNameInStorage, guardCioFormsWithRecaptcha } from './utils'
+import { guardCioFormsWithRecaptcha } from './utils'
 
 export * from './utils'
 export * from './features'
