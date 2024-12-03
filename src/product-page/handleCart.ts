@@ -2,8 +2,7 @@ import { MUSE_IN_BOX_TRIAL_SEARCH_PARAM } from '../config'
 import { BundleType } from '../types'
 import { isStaging } from '../utils'
 
-/** @deprecated in fav of handleCart */
-export function handleCartBlackFriday() {
+export function handleCart() {
   function setActive(element, isActive) {
     element?.classList[isActive ? 'add' : 'remove']('active')
   }
@@ -14,24 +13,15 @@ export function handleCartBlackFriday() {
 
   const bundles = {
     [BundleType.SUBSCRIPTION_ONLY]: {
-      discountName: 'Black Friday discount',
-      couponId: isStaging() ? 'D3mgjtkT' : 'aWmdtFSD',
-      amountOff: '70',
       ctaTitle: 'Order now',
     },
     [BundleType.SUBSCRIPTION_ONLY + '-monthly']: {
       ctaTitle: 'Order now',
     },
     [BundleType.MUSE]: {
-      discountName: 'Black Friday discount',
-      couponId: isStaging() ? '9oEGjT70' : 'hryuMkbo',
-      amountOff: '200',
-      ctaTitle: 'Pre-order now',
+      ctaTitle: 'Order now',
     },
     [BundleType.BRAINBIT]: {
-      discountName: 'Black Friday discount',
-      couponId: isStaging() ? 'OjjWjGvV' : '2oEzwWNL',
-      amountOff: '199',
       ctaTitle: 'Order now',
     },
   }
@@ -106,11 +96,6 @@ export function handleCartBlackFriday() {
       if (paymentProvider) params.append('paymentProvider', paymentProvider)
 
       if (plan === 'YEARLY') {
-        const { discountName, amountOff, couponId } = bundles[bundleType]
-        if (discountName) params.append('discountName', discountName)
-        if (amountOff) params.append('amountOff', amountOff)
-        if (couponId) params.append('couponId', couponId)
-
         /** Handle Muse In Box 1m Trial */
         const requestParams = new URLSearchParams(window.location.search)
         if (

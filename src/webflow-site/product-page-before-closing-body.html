@@ -18,7 +18,7 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-    const requiredFunctions = ['handleCartBlackFriday', 'handleImageCarousel']
+    const requiredFunctions = ['handleCart', 'handleImageCarousel']
     requiredFunctions.forEach((name) => {
       if (window.ab?.[name] instanceof Function) {
         window.ab[name]();
