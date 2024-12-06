@@ -13,15 +13,24 @@ export function handleCart() {
 
   const bundles = {
     [BundleType.SUBSCRIPTION_ONLY]: {
+      discountName: 'Holiday discount',
+      couponId: isStaging() ? 'p7FKKAuI' : '18ALcRHt',
+      amountOff: '60',
       ctaTitle: 'Order now',
     },
     [BundleType.SUBSCRIPTION_ONLY + '-monthly']: {
       ctaTitle: 'Order now',
     },
     [BundleType.MUSE]: {
+      discountName: 'Holiday discount',
+      couponId: isStaging() ? 'EEkB1vom' : 'nMNvr0Zo',
+      amountOff: '150',
       ctaTitle: 'Order now',
     },
     [BundleType.BRAINBIT]: {
+      discountName: 'Holiday discount',
+      couponId: isStaging() ? 'B4o0gHgR' : 'QVyhS92c',
+      amountOff: '200',
       ctaTitle: 'Order now',
     },
   }
@@ -96,16 +105,23 @@ export function handleCart() {
       if (paymentProvider) params.append('paymentProvider', paymentProvider)
 
       if (plan === 'YEARLY') {
+        const { discountName, amountOff, couponId } = bundles[bundleType]
+        if (discountName) params.append('discountName', discountName)
+        if (amountOff) params.append('amountOff', amountOff)
+        if (couponId) params.append('couponId', couponId)
+
+        if (bundleType === BundleType.SUBSCRIPTION_ONLY) {
+          params.append('trialBadge', '7-day free trial included')
+        }
+
         /** Handle Muse In Box 1m Trial */
         const requestParams = new URLSearchParams(window.location.search)
         if (
           bundleType === BundleType.SUBSCRIPTION_ONLY &&
           requestParams.has(MUSE_IN_BOX_TRIAL_SEARCH_PARAM)
         ) {
-          params = new URLSearchParams([
-            ['bundleType', BundleType.MUSE_IN_BOX],
-            ['discountName', 'Muse 1-month free trial included'],
-          ])
+          params.set('bundleType', BundleType.MUSE_IN_BOX)
+          params.set('trialBadge', 'Muse 1-month free trial included')
         }
       }
 
