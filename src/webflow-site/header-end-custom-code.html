@@ -196,7 +196,7 @@
 <!-- [External Scripts by Digital Sparks] -->
 
 <!-- -->
-<script defer src="https://cdn.jsdelivr.net/gh/listenalphabeats/site-scripts@1.1.2/dist/bundle.js"></script>
+<script defer src="https://cdn.jsdelivr.net/gh/listenalphabeats/site-scripts@1.1.4/dist/bundle.js"></script>
 
 <script>
   (function () {
@@ -233,64 +233,3 @@
     visibility: hidden;
   }
 </style>
-
-
-<script>
-  const COUNTDOWN_CONFIG = {
-    targetDate: '2024-12-02T23:59:59-08:00',
-    timeUnits: [
-      { name: 'days', divisor: 1000 * 60 * 60 * 24, remainder: null },
-      { name: 'hours', divisor: 1000 * 60 * 60, remainder: 1000 * 60 * 60 * 24 },
-      { name: 'minutes', divisor: 1000 * 60, remainder: 1000 * 60 * 60 },
-      { name: 'seconds', divisor: 1000, remainder: 1000 * 60 }
-    ],
-    updateInterval: 1000
-  };
-
-  let countdownInterval;
-
-  function getTimeLeft(difference) {
-    return COUNTDOWN_CONFIG.timeUnits.reduce((acc, unit) => {
-      const value = unit.remainder
-        ? Math.floor((difference % unit.remainder) / unit.divisor)
-        : Math.floor(difference / unit.divisor);
-      acc[unit.name] = value;
-      return acc;
-    }, {});
-  }
-
-  function formatNumber(number) {
-    return number.toString().padStart(2, '0');
-  }
-
-  function updateDisplay(timeLeft) {
-    COUNTDOWN_CONFIG.timeUnits.forEach(unit => {
-      const elements = document.querySelectorAll(
-        `.banner-countdown-number.countdown-${unit.name}, .countdown-number.countdown-${unit.name}`
-      );
-      elements.forEach(element => {
-        element.textContent = formatNumber(Math.max(0, timeLeft[unit.name]));
-      });
-    });
-  }
-
-  function updateCountdown() {
-    const targetDate = new Date(COUNTDOWN_CONFIG.targetDate);
-    const currentDate = new Date();
-    const difference = targetDate - currentDate;
-
-    if (difference <= 0) {
-      clearInterval(countdownInterval);
-      return;
-    }
-
-    const timeLeft = getTimeLeft(difference);
-    updateDisplay(timeLeft);
-  }
-
-  // Start the countdown
-  countdownInterval = setInterval(updateCountdown, COUNTDOWN_CONFIG.updateInterval);
-
-  // Initial call to avoid delay
-  updateCountdown();
-</script>
