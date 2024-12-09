@@ -15,9 +15,9 @@ export function handlePartnerLanding() {
       amountOff: '199',
     },
     usat: {
-      discountName: 'USAT 15% Off',
-      couponId: isStaging() ? 'YcvRrNe2' : '9xjBd0Rf',
-      percentOff: '15',
+      discountName: 'USAT $399 Off',
+      couponId: isStaging() ? 'v2eCFTaJ' : 'nqYihweZ',
+      amountOff: '399',
     },
   }
 
