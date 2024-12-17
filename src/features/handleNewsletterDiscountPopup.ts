@@ -1,14 +1,7 @@
 import { BrowserCookies } from '../types'
-import {
-  getCookie,
-  isGooglebot,
-  isStaging,
-  NEWSLETTER_DISCOUNT_PARAMS_STORAGE_ID,
-} from '../utils'
+import { getCookie, isGooglebot } from '../utils'
 
 export function handleNewsletterDiscountPopup() {
-  const couponId = isStaging() ? '8ENDZLrc' : 'FynlZTlc'
-  const NEWSLETTER_DISCOUNT_PARAMS = `couponId=${couponId}&amountOff=25&discountName=$25 Off Annual Plan`
   const MODAL_ID = 'discount-modal-a'
   const BACKDROP_ID = 'discount-modal-background-a'
   const CLOSE_BTN_ID = 'discount-modal-close-button-a'
@@ -41,11 +34,6 @@ export function handleNewsletterDiscountPopup() {
       String(new Date().getTime())
     )
 
-    localStorage.setItem(
-      NEWSLETTER_DISCOUNT_PARAMS_STORAGE_ID,
-      NEWSLETTER_DISCOUNT_PARAMS
-    )
-
     /** No redirect to /product on 'Continue browsing' */
     const successContinueBtn = document.querySelector(
       '#discount-form-a .popup-modal_success-message-wrapper a'
@@ -66,10 +54,6 @@ export function handleNewsletterDiscountPopup() {
 
   /** MAIN CODE ===================================================== */
   if (isGooglebot()) {
-    return
-  }
-
-  if (!['/', '/product', '/shop'].includes(window.location.pathname)) {
     return
   }
 
