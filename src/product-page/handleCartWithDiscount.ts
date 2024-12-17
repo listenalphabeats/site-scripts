@@ -7,6 +7,7 @@ import {
   redirectToPartnerPage,
 } from '../utils'
 
+/** @deprecated */
 export function handleCartWithDiscount() {
   const partner = getPartnerNameInStorage()
   if (partner) {
