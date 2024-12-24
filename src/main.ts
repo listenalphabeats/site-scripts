@@ -8,6 +8,7 @@ export * from './utils'
 export * from './features'
 export * from './product-page'
 export * from './muse-page'
+export * from './partners-page'
 
 conditionalCookieBanner()
 guardCioFormsWithRecaptcha()
