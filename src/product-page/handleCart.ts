@@ -1,40 +1,16 @@
-import { MUSE_IN_BOX_TRIAL_SEARCH_PARAM } from '../config'
+import { CES_DISCOUNT_OFFER, MUSE_IN_BOX_TRIAL_SEARCH_PARAM } from '../config'
+import {
+  getBrainbitHolidayOffer,
+  getBrainbitCESOffer,
+  getMuseHolidayOffer,
+  getMuseCESOffer,
+} from '../offers'
 import { BundleType } from '../types'
-import { isStaging } from '../utils'
+import { getSearchParam, isStaging } from '../utils'
+import { parsePriceValue } from './utils'
+import { showCESOfferBadges } from './utils/showCESOfferBadges'
 
 export function handleCart() {
-  function setActive(element, isActive) {
-    element?.classList[isActive ? 'add' : 'remove']('active')
-  }
-
-  function setDisplay(element, display) {
-    if (element) element.style.display = display ? 'flex' : 'none'
-  }
-
-  const bundles = {
-    [BundleType.SUBSCRIPTION_ONLY]: {
-      discountName: 'Holiday discount',
-      couponId: isStaging() ? 'p7FKKAuI' : '18ALcRHt',
-      amountOff: '60',
-      ctaTitle: 'Order now',
-    },
-    [BundleType.SUBSCRIPTION_ONLY + '-monthly']: {
-      ctaTitle: 'Order now',
-    },
-    [BundleType.MUSE]: {
-      discountName: 'Holiday discount',
-      couponId: isStaging() ? 'EEkB1vom' : 'nMNvr0Zo',
-      amountOff: '150',
-      ctaTitle: 'Order now',
-    },
-    [BundleType.BRAINBIT]: {
-      discountName: 'Holiday discount',
-      couponId: isStaging() ? 'B4o0gHgR' : 'QVyhS92c',
-      amountOff: '200',
-      ctaTitle: 'Order now',
-    },
-  }
-
   type HtmlAEl = HTMLAnchorElement | null
 
   const elements = {
@@ -73,6 +49,32 @@ export function handleCart() {
     ) as HtmlAEl,
   }
 
+  function setActive(element, isActive) {
+    element?.classList[isActive ? 'add' : 'remove']('active')
+  }
+
+  function setDisplay(element, display) {
+    if (element) element.style.display = display ? 'flex' : 'none'
+  }
+
+  const isCESOffer = getSearchParam('offer') === CES_DISCOUNT_OFFER
+
+  const bundles = {
+    [BundleType.SUBSCRIPTION_ONLY]: {
+      discountName: 'Holiday discount',
+      couponId: isStaging() ? 'p7FKKAuI' : '18ALcRHt',
+      amountOff: '60',
+      ctaTitle: 'Order now',
+    },
+    [BundleType.SUBSCRIPTION_ONLY + '-monthly']: {
+      ctaTitle: 'Order now',
+    },
+    [BundleType.MUSE]: isCESOffer ? getMuseCESOffer() : getMuseHolidayOffer(),
+    [BundleType.BRAINBIT]: isCESOffer
+      ? getBrainbitCESOffer()
+      : getBrainbitHolidayOffer(),
+  }
+
   function handleMuseInBoxBadge() {
     const requestParams = new URLSearchParams(window.location.search)
     if (!requestParams.has(MUSE_IN_BOX_TRIAL_SEARCH_PARAM)) return
@@ -107,7 +109,7 @@ export function handleCart() {
       if (plan === 'YEARLY') {
         const { discountName, amountOff, couponId } = bundles[bundleType]
         if (discountName) params.append('discountName', discountName)
-        if (amountOff) params.append('amountOff', amountOff)
+        if (amountOff) params.append('amountOff', String(amountOff))
         if (couponId) params.append('couponId', couponId)
 
         if (bundleType === BundleType.SUBSCRIPTION_ONLY) {
@@ -238,10 +240,55 @@ export function handleCart() {
     elements.paymentUpfront?.addEventListener('click', setPaymentUpfront)
     elements.paymentKlarna?.addEventListener('click', setPaymentKlarna)
 
-    setSubscriptionOnly()
+    if (isCESOffer) {
+      setBundleMuse()
+    } else {
+      setSubscriptionOnly()
+    }
+
     updatePrimaryButtonUrl()
   }
 
   handleCartChange()
   handleMuseInBoxBadge()
+
+  if (isCESOffer) {
+    showCESOfferBadges()
+    const museOrigPriceElement = elements.bundleMuse?.querySelector(
+      '.price.text-style-strikethrough'
+    )
+
+    const museOrigPrice =
+      museOrigPriceElement && parsePriceValue(museOrigPriceElement)
+
+    if (museOrigPrice) {
+      const museOfferPrice = museOrigPrice - getMuseCESOffer().amountOff
+
+      const musePriceToPayElement =
+        elements.bundleMuse?.querySelector('.price.to-pay')
+
+      if (musePriceToPayElement) {
+        musePriceToPayElement.textContent = `$${museOfferPrice}`
+      }
+    }
+
+    const brainbitOrigPriceElement = elements.bundleBrainbit?.querySelector(
+      '.price.text-style-strikethrough'
+    )
+
+    const brainbitOrigPrice =
+      brainbitOrigPriceElement && parsePriceValue(brainbitOrigPriceElement)
+
+    if (brainbitOrigPrice) {
+      const brainbitOfferPrice =
+        brainbitOrigPrice - getBrainbitCESOffer().amountOff
+
+      const brainbitPriceToPayElement =
+        elements.bundleBrainbit?.querySelector('.price.to-pay')
+
+      if (brainbitPriceToPayElement) {
+        brainbitPriceToPayElement.textContent = `$${brainbitOfferPrice}`
+      }
+    }
+  }
 }

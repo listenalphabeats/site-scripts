@@ -9,6 +9,7 @@ export function handlePartnerLanding() {
   }
 
   const partners: Record<string, PartnerAttrs> = {
+    /** @deprecated */
     amaze: {
       discountName: 'Amaze Creator Bundle discount',
       couponId: isStaging() ? 'YiM3PNXT' : 'Gu2jGXBe',
