@@ -1,7 +1,15 @@
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-    ab?.redirectAmazeToProduct?.();
-    ab?.handlePartnerLanding?.();
+    const requiredFunctions = ['redirectAmazeToProduct', 'handlePartnerLanding']
+    requiredFunctions.forEach((name) => {
+      if (window.ab?.[name] instanceof Function) {
+        window.ab[name]();
+      } else {
+        const message = `Required function ${name} is not available`
+        window.Sentry?.captureMessage(message, 'warning')
+        console.warn(message)
+      }
+    });
   });
 </script>
 

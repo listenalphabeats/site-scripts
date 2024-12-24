@@ -18,10 +18,12 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-    ab?.handleInitialTab?.({
-      tabSelector: '.product-tabs_tab',
-      searchParamName: 'tabIndex',
-    })
+    if (window.ab?.handleInitialTab instanceof Function) {
+      window.ab.handleInitialTab({
+        tabSelector: '.product-tabs_tab',
+        searchParamName: 'tabIndex',
+      })
+    }
 
     const requiredFunctions = ['handleCart', 'handleImageCarousel']
     requiredFunctions.forEach((name) => {
