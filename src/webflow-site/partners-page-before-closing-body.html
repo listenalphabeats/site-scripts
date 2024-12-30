@@ -1,6 +1,24 @@
 <script>
+  function redirectWithParams(params) {
+    const url = new URL(params.path, window.location.origin)
+    if (params.searchParams) {
+      url.search = String(params.searchParams)
+    }
+    window.location.replace(String(url))
+  }
+
+  if (window.location.pathname === '/partners/amaze') {
+    redirectWithParams({
+      path: '/product',
+      searchParams: new URLSearchParams({
+        offer: 'ces-discount',
+        tabIndex: '1',
+      }),
+    })
+  }
+
   document.addEventListener('DOMContentLoaded', () => {
-    const requiredFunctions = ['redirectAmazeToProduct', 'handlePartnerLanding']
+    const requiredFunctions = ['handlePartnerLanding']
     requiredFunctions.forEach((name) => {
       if (window.ab?.[name] instanceof Function) {
         window.ab[name]();
