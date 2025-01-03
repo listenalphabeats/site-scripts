@@ -9,16 +9,10 @@ export function handlePartnerLanding() {
   }
 
   const partners: Record<string, PartnerAttrs> = {
-    /** @deprecated */
-    amaze: {
-      discountName: 'Amaze Creator Bundle discount',
-      couponId: isStaging() ? 'YiM3PNXT' : 'Gu2jGXBe',
-      amountOff: '199',
-    },
     usat: {
-      discountName: 'USAT $399 Off',
-      couponId: isStaging() ? 'v2eCFTaJ' : 'nqYihweZ',
-      amountOff: '399',
+      discountName: 'USAT 15% Off',
+      couponId: isStaging() ? 'qT4Eebsy' : 'Zh5tZtEZ',
+      percentOff: '15',
     },
   }
 
