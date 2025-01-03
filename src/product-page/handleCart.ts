@@ -1,10 +1,5 @@
 import { CES_DISCOUNT_OFFER, MUSE_IN_BOX_TRIAL_SEARCH_PARAM } from '../config'
-import {
-  getBrainbitHolidayOffer,
-  getBrainbitCESOffer,
-  getMuseHolidayOffer,
-  getMuseCESOffer,
-} from '../offers'
+import { getBrainbitCESOffer, getMuseCESOffer } from '../offers'
 import { BundleType } from '../types'
 import { getSearchParam, isStaging } from '../utils'
 import { parsePriceValue } from './utils'
@@ -37,13 +32,6 @@ export function handleCart() {
     paymentUpfront: document.getElementById('payment-upfront') as HtmlAEl,
     paymentKlarna: document.getElementById('payment-klarna') as HtmlAEl,
 
-    shippingMuse: document.getElementById(
-      'shipping-' + BundleType.MUSE
-    ) as HtmlAEl,
-    shippingBrainbit: document.getElementById(
-      'shipping-' + BundleType.BRAINBIT
-    ) as HtmlAEl,
-
     primaryBuyButton: document.getElementById(
       'product-buy-primary-btn'
     ) as HtmlAEl,
@@ -59,20 +47,17 @@ export function handleCart() {
 
   const isCESOffer = getSearchParam('offer') === CES_DISCOUNT_OFFER
 
+  const noDiscountProps = {
+    discountName: '',
+    amountOff: 0,
+    couponId: '',
+  }
+
   const bundles = {
-    [BundleType.SUBSCRIPTION_ONLY]: {
-      discountName: 'Holiday discount',
-      couponId: isStaging() ? 'p7FKKAuI' : '18ALcRHt',
-      amountOff: '60',
-      ctaTitle: 'Order now',
-    },
-    [BundleType.SUBSCRIPTION_ONLY + '-monthly']: {
-      ctaTitle: 'Order now',
-    },
-    [BundleType.MUSE]: isCESOffer ? getMuseCESOffer() : getMuseHolidayOffer(),
-    [BundleType.BRAINBIT]: isCESOffer
-      ? getBrainbitCESOffer()
-      : getBrainbitHolidayOffer(),
+    [BundleType.SUBSCRIPTION_ONLY]: noDiscountProps,
+    [BundleType.SUBSCRIPTION_ONLY + '-monthly']: noDiscountProps,
+    [BundleType.MUSE]: isCESOffer ? getMuseCESOffer() : noDiscountProps,
+    [BundleType.BRAINBIT]: isCESOffer ? getBrainbitCESOffer() : noDiscountProps,
   }
 
   function handleMuseInBoxBadge() {
@@ -129,7 +114,6 @@ export function handleCart() {
 
       if (elements.primaryBuyButton) {
         elements.primaryBuyButton.href = `${url}?${params}`
-        elements.primaryBuyButton.innerText = bundles[bundleType].ctaTitle
       }
     }
 
@@ -144,9 +128,6 @@ export function handleCart() {
       paymentProvider = ''
       setDisplay(elements.paymentKlarna, false)
       setPaymentUpfront()
-
-      setDisplay(elements.shippingMuse, false)
-      setDisplay(elements.shippingBrainbit, false)
 
       setActive(elements.subscriptionOnly, true)
       setActive(elements.subscriptionOnlyMonthly, false)
@@ -167,9 +148,6 @@ export function handleCart() {
       setDisplay(elements.paymentKlarna, false)
       setPaymentUpfront()
 
-      setDisplay(elements.shippingMuse, false)
-      setDisplay(elements.shippingBrainbit, false)
-
       setActive(elements.subscriptionOnly, false)
       setActive(elements.subscriptionOnlyMonthly, true)
       setActive(elements.bundleBrainbit, false)
@@ -186,9 +164,6 @@ export function handleCart() {
       setDisplay(elements.imageSetMuse, true)
       setDisplay(elements.imageSetBrainbit, false)
 
-      setDisplay(elements.shippingMuse, true)
-      setDisplay(elements.shippingBrainbit, false)
-
       setActive(elements.subscriptionOnly, false)
       setActive(elements.subscriptionOnlyMonthly, false)
       setActive(elements.bundleBrainbit, false)
@@ -204,9 +179,6 @@ export function handleCart() {
       setDisplay(elements.imageSetDefault, false)
       setDisplay(elements.imageSetMuse, false)
       setDisplay(elements.imageSetBrainbit, true)
-
-      setDisplay(elements.shippingMuse, false)
-      setDisplay(elements.shippingBrainbit, true)
 
       setActive(elements.subscriptionOnly, false)
       setActive(elements.subscriptionOnlyMonthly, false)
@@ -269,6 +241,7 @@ export function handleCart() {
 
       if (musePriceToPayElement) {
         musePriceToPayElement.textContent = `$${museOfferPrice}`
+        setDisplay(museOrigPriceElement, true)
       }
     }
 
@@ -288,6 +261,7 @@ export function handleCart() {
 
       if (brainbitPriceToPayElement) {
         brainbitPriceToPayElement.textContent = `$${brainbitOfferPrice}`
+        setDisplay(brainbitOrigPriceElement, true)
       }
     }
   }
