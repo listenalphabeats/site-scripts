@@ -11,7 +11,7 @@ export function handlePartnerLanding() {
   const partners: Record<string, PartnerAttrs> = {
     usat: {
       discountName: 'USAT 15% Off',
-      couponId: isStaging() ? 'qT4Eebsy' : 'Zh5tZtEZ',
+      couponId: isStaging() ? 'pdSuKVbv' : 'cpvIXqMd',
       percentOff: '15',
     },
   }
