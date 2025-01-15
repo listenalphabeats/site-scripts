@@ -1,20 +1,17 @@
-export function runWhenAvailable(
-  functionName,
+export function runWhenAvailable({
+  getMethod,
   callback,
   interval = 100,
-  timeout = 4000
-) {
+  timeout = 2000,
+}) {
   const startTime = Date.now()
-
-  function checkFunction() {
-    if (typeof window[functionName] === 'function') {
+  const checkMethod = setInterval(() => {
+    if (typeof getMethod() === 'function') {
+      clearInterval(checkMethod)
       callback()
-    } else if (Date.now() - startTime < timeout) {
-      setTimeout(checkFunction, interval)
-    } else {
-      console.error(`${functionName} is not available after ${timeout}ms`)
+    } else if (Date.now() - startTime >= timeout) {
+      clearInterval(checkMethod)
+      console.warn(`method is not available after ${timeout}ms`)
     }
-  }
-
-  checkFunction()
+  }, interval)
 }
