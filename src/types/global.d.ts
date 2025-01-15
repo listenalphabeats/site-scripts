@@ -7,6 +7,7 @@ declare global {
     dataLayer?: any[]
     posthog?: {
       getFeatureFlag(name: string): string
+      capture(eventName: string, data?: object): void
     }
     grecaptcha?: {
       enterprise: {

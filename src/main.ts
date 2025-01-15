@@ -2,7 +2,11 @@ import {
   conditionalCookieBanner,
   handleNewsletterDiscountPopup,
 } from './features'
-import { guardCioFormsWithRecaptcha, runAfterConsentResolved } from './utils'
+import {
+  guardCioFormsWithRecaptcha,
+  handleInternalUserEnrollment,
+  runAfterConsentResolved,
+} from './utils'
 
 export * from './utils'
 export * from './features'
@@ -12,6 +16,7 @@ export * from './partners-page'
 
 conditionalCookieBanner()
 guardCioFormsWithRecaptcha()
+handleInternalUserEnrollment()
 
 document.addEventListener('DOMContentLoaded', () => {
   runAfterConsentResolved({
