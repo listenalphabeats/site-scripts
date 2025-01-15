@@ -8,6 +8,9 @@ declare global {
     posthog?: {
       getFeatureFlag(name: string): string
       capture(eventName: string, data?: object): void
+      onFeatureFlags(callback: () => void): void
+      isFeatureEnabled(name: string): void
+      setPersonPropertiesForFlags(data: object)
     }
     grecaptcha?: {
       enterprise: {

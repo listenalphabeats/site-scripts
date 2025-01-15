@@ -2,11 +2,8 @@ import {
   conditionalCookieBanner,
   handleNewsletterDiscountPopup,
 } from './features'
-import {
-  guardCioFormsWithRecaptcha,
-  handleInternalUserEnrollment,
-  runAfterConsentResolved,
-} from './utils'
+import { guardCioFormsWithRecaptcha, runAfterConsentResolved } from './utils'
+import { handleInternalUserEnrollment } from './utilsPosthog'
 
 export * from './utils'
 export * from './features'
