@@ -9,8 +9,9 @@ declare global {
       getFeatureFlag(name: string): string
       capture(eventName: string, data?: object): void
       onFeatureFlags(callback: () => void): void
-      isFeatureEnabled(name: string): void
+      isFeatureEnabled(name: string): boolean
       setPersonPropertiesForFlags(data: object)
+      reloadFeatureFlags(): void
     }
     grecaptcha?: {
       enterprise: {

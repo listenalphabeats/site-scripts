@@ -1,6 +1,6 @@
-import { runWhenAvailable } from '../utils/runWhenAvailable'
+import { runWhenAvailable } from '../utils'
 
-const KEY = 'is_internal'
+const KEY = 'is-internal'
 
 export function handleInternalUserEnrollment() {
   const params = new URLSearchParams(window.location.search)
@@ -16,7 +16,9 @@ function setIsInternal() {
   runWhenAvailable({
     getMethod: () => window.posthog?.capture,
     callback: () => {
-      window.posthog?.capture('$set', { $set: { [KEY]: true } })
+      console.debug(`Setting ${KEY} to true`)
+      window.posthog?.setPersonPropertiesForFlags({ [KEY]: true })
+      window.posthog?.reloadFeatureFlags()
     },
   })
 }
@@ -25,7 +27,9 @@ function setNotInternal() {
   runWhenAvailable({
     getMethod: () => window.posthog?.capture,
     callback: () => {
-      window.posthog?.capture('event_name', { $unset: [KEY] })
+      console.debug(`Setting ${KEY} to false`)
+      window.posthog?.setPersonPropertiesForFlags({ [KEY]: false })
+      window.posthog?.reloadFeatureFlags()
     },
   })
 }
