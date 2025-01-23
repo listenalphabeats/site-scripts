@@ -11,6 +11,8 @@ export * from './product-page'
 export * from './muse-page'
 export * from './partners-page'
 
+import './web-components'
+
 conditionalCookieBanner()
 guardCioFormsWithRecaptcha()
 handleInternalUserEnrollment()

@@ -5,10 +5,10 @@ Example how to check if a feature is enabled:
 
 ```ts
 window.posthog?.onFeatureFlags(function () {
-  if (window.posthog?.isFeatureEnabled('internal-feature')) {
-    console.debug('internal-feature enabled')
+  if (window.posthog?.isFeatureEnabled('internal-features')) {
+    console.debug('internal-features enabled')
   } else {
-    console.debug('internal-feature DISABLED')
+    console.debug('internal-features DISABLED')
   }
 })
 ```

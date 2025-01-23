@@ -1,6 +1,6 @@
 {
   "name": "site-scripts",
-  "version": "1.1.10",
+  "version": "1.1.11",
   "description": "Site scripts",
   "type": "module",
   "scripts": {
@@ -9,11 +9,15 @@
     "tag": "tsc --project ./ && vite build && node tag-version.js"
   },
   "devDependencies": {
+    "@babel/plugin-proposal-decorators": "^7.25.9",
     "inquirer": "^10.0.4",
     "jsonfile": "^6.1.0",
     "simple-git": "^3.25.0",
     "swiper": "^11.1.14",
     "typescript": "^5.5.4",
     "vite": "^5.3.4"
+  },
+  "dependencies": {
+    "lit": "^3.2.1"
   }
 }
