@@ -15,6 +15,43 @@
 <script>(function (w, r) { w._rwq = r; w[r] = w[r] || function () { (w[r].q = w[r].q || []).push(arguments) } })(window, 'rewardful');</script>
 <!-- End Rewardful -->
 
+<!-- -->
+<script defer src="https://cdn.jsdelivr.net/gh/listenalphabeats/site-scripts@1.1.11/dist/bundle.js"></script>
+
+<script>
+  window.runWhenAvailable = ({
+    getMethod,
+    callback,
+    interval = 100,
+    timeout = 2000,
+  }) => {
+    const startTime = Date.now()
+    const checkMethod = setInterval(() => {
+      if (typeof getMethod() === 'function') {
+        clearInterval(checkMethod)
+        callback()
+      } else if (Date.now() - startTime >= timeout) {
+        clearInterval(checkMethod)
+        console.warn(`method is not available after ${timeout}ms`)
+      }
+    }, interval)
+  }
+
+  window.onPosthogFFAvailable = (flagName, callbackYes, callbackNo) => {
+    window.runWhenAvailable({
+      getMethod: () => window.posthog?.onFeatureFlags,
+      callback: () =>
+        window.posthog?.onFeatureFlags(() => {
+          if (window.posthog?.isFeatureEnabled(flagName)) {
+            callbackYes?.()
+          } else {
+            callbackNo?.()
+          }
+        }),
+    })
+  }
+</script>
+
 
 <!-- [External Scripts by Digital Sparks] -->
 <script defer src="https://cdn.jsdelivr.net/npm/@finsweet/attributes-modal@1/modal.js"></script>
@@ -194,9 +231,6 @@
   }); 
 </script>
 <!-- [External Scripts by Digital Sparks] -->
-
-<!-- -->
-<script defer src="https://cdn.jsdelivr.net/gh/listenalphabeats/site-scripts@1.1.8/dist/bundle.js"></script>
 
 
 <script>
