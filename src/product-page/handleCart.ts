@@ -1,4 +1,8 @@
-import { CES_DISCOUNT_OFFER, MUSE_IN_BOX_TRIAL_SEARCH_PARAM } from '../config'
+import {
+  CES_DISCOUNT_OFFER,
+  MUSE_IN_BOX_TRIAL_SEARCH_PARAM,
+  OFFER_GENERIC_SEARCH_PARAM,
+} from '../config'
 import { getBrainbitCESOffer, getMuseCESOffer } from '../offers'
 import { BundleType } from '../types'
 import { getSearchParam, isStaging } from '../utils'
@@ -45,7 +49,9 @@ export function handleCart() {
     if (element) element.style.display = display ? 'flex' : 'none'
   }
 
-  const isCESOffer = getSearchParam('offer') === CES_DISCOUNT_OFFER
+  const isCESOffer =
+    getSearchParam('offer') === CES_DISCOUNT_OFFER ||
+    getSearchParam('offer') === OFFER_GENERIC_SEARCH_PARAM
 
   const noDiscountProps = {
     discountName: '',
