@@ -1,17 +1,17 @@
 import { isStaging } from './utils'
 
-export function getMuseCESOffer() {
+export function getOfferGenericMuse() {
   return {
-    discountName: 'Exclusive CES Discount',
-    couponId: isStaging() ? 'BXkB18mL' : 'WSeHfM47',
+    discountName: 'Limited Time Special Discount',
+    couponId: isStaging() ? 'mhAenRNG' : '70LO0cr8',
     amountOff: 100,
   }
 }
 
-export function getBrainbitCESOffer() {
+export function getOfferGenericBrainbit() {
   return {
-    discountName: 'Exclusive CES Discount',
-    couponId: isStaging() ? 'Xos0oOEa' : 'A5K0hpO5',
-    amountOff: 200,
+    discountName: 'Limited Time Special Discount',
+    couponId: isStaging() ? 'HmBrVIcf' : '4WDuUowk',
+    amountOff: 250,
   }
 }

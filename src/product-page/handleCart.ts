@@ -3,11 +3,16 @@ import {
   MUSE_IN_BOX_TRIAL_SEARCH_PARAM,
   OFFER_GENERIC_SEARCH_PARAM,
 } from '../config'
-import { getBrainbitCESOffer, getMuseCESOffer } from '../offers'
+import { getOfferGenericBrainbit, getOfferGenericMuse } from '../offers'
 import { BundleType } from '../types'
 import { getSearchParam, isStaging } from '../utils'
-import { parsePriceValue } from './utils'
-import { showCESOfferBadges } from './utils/showCESOfferBadges'
+import {
+  handleMuseInBoxBadge,
+  parsePriceValue,
+  setActive,
+  setDisplay,
+  showOfferBadge,
+} from './utils'
 
 export function handleCart() {
   type HtmlAEl = HTMLAnchorElement | null
@@ -41,17 +46,20 @@ export function handleCart() {
     ) as HtmlAEl,
   }
 
-  function setActive(element, isActive) {
-    element?.classList[isActive ? 'add' : 'remove']('active')
-  }
+  console.debug(
+    '🟡 is-generic-offer-on:',
+    window.posthog?.isFeatureEnabled('is-generic-offer-on')
+  )
 
-  function setDisplay(element, display) {
-    if (element) element.style.display = display ? 'flex' : 'none'
-  }
+  console.debug(
+    '🟡 is-super-bowl-offer-on:',
+    window.posthog?.isFeatureEnabled('is-super-bowl-offer-on')
+  )
 
-  const isCESOffer =
+  const isOffer =
     getSearchParam('offer') === CES_DISCOUNT_OFFER ||
-    getSearchParam('offer') === OFFER_GENERIC_SEARCH_PARAM
+    (getSearchParam('offer') === OFFER_GENERIC_SEARCH_PARAM &&
+      window.posthog?.isFeatureEnabled('is-generic-offer-on'))
 
   const noDiscountProps = {
     discountName: '',
@@ -62,22 +70,10 @@ export function handleCart() {
   const bundles = {
     [BundleType.SUBSCRIPTION_ONLY]: noDiscountProps,
     [BundleType.SUBSCRIPTION_ONLY + '-monthly']: noDiscountProps,
-    [BundleType.MUSE]: isCESOffer ? getMuseCESOffer() : noDiscountProps,
-    [BundleType.BRAINBIT]: isCESOffer ? getBrainbitCESOffer() : noDiscountProps,
-  }
-
-  function handleMuseInBoxBadge() {
-    const requestParams = new URLSearchParams(window.location.search)
-    if (!requestParams.has(MUSE_IN_BOX_TRIAL_SEARCH_PARAM)) return
-    const badgeAnnualSubDefault = document.getElementById(
-      'badge-annual-sub-offer'
-    )
-    const badgeAnnualSubMonthTrial = document.getElementById(
-      'badge-annual-sub-month-trial'
-    )
-
-    setDisplay(badgeAnnualSubDefault, false)
-    setDisplay(badgeAnnualSubMonthTrial, true)
+    [BundleType.MUSE]: isOffer ? getOfferGenericMuse() : noDiscountProps,
+    [BundleType.BRAINBIT]: isOffer
+      ? getOfferGenericBrainbit()
+      : noDiscountProps,
   }
 
   function handleCartChange() {
@@ -218,7 +214,7 @@ export function handleCart() {
     elements.paymentUpfront?.addEventListener('click', setPaymentUpfront)
     elements.paymentKlarna?.addEventListener('click', setPaymentKlarna)
 
-    if (isCESOffer) {
+    if (isOffer) {
       setBundleMuse()
     } else {
       setSubscriptionOnly()
@@ -230,8 +226,15 @@ export function handleCart() {
   handleCartChange()
   handleMuseInBoxBadge()
 
-  if (isCESOffer) {
-    showCESOfferBadges()
+  if (isOffer) {
+    showOfferBadge(
+      '#bundle-muse .discount-badge',
+      getOfferGenericMuse().discountName + ' applied'
+    )
+    showOfferBadge(
+      '#bundle-brainbit .discount-badge',
+      getOfferGenericBrainbit().discountName + ' applied'
+    )
     const museOrigPriceElement = elements.bundleMuse?.querySelector(
       '.price.text-style-strikethrough'
     )
@@ -240,7 +243,7 @@ export function handleCart() {
       museOrigPriceElement && parsePriceValue(museOrigPriceElement)
 
     if (museOrigPrice) {
-      const museOfferPrice = museOrigPrice - getMuseCESOffer().amountOff
+      const museOfferPrice = museOrigPrice - getOfferGenericMuse().amountOff
 
       const musePriceToPayElement =
         elements.bundleMuse?.querySelector('.price.to-pay')
@@ -260,7 +263,7 @@ export function handleCart() {
 
     if (brainbitOrigPrice) {
       const brainbitOfferPrice =
-        brainbitOrigPrice - getBrainbitCESOffer().amountOff
+        brainbitOrigPrice - getOfferGenericBrainbit().amountOff
 
       const brainbitPriceToPayElement =
         elements.bundleBrainbit?.querySelector('.price.to-pay')
