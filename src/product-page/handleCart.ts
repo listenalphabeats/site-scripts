@@ -301,7 +301,7 @@ export function handleCart() {
         setDisplay(brainbitOrigPriceElement, true)
       }
     }
-  }
 
-  setActiveTab('.product-tabs_tab', 1)
+    setActiveTab('.product-tabs_tab', 1)
+  }
 }
