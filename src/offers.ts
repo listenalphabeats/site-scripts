@@ -15,3 +15,11 @@ export function getOfferGenericBrainbit() {
     amountOff: 250,
   }
 }
+
+export function getOfferSuperBowlBrainbit() {
+  return {
+    discountName: '50% Off SuperBowl Deal',
+    couponId: isStaging() ? 'gmtxMx5q' : 'osSWNTSD',
+    amountOff: 250,
+  }
+}

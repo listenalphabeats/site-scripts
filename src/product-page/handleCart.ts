@@ -3,13 +3,18 @@ import {
   MUSE_IN_BOX_TRIAL_SEARCH_PARAM,
   OFFER_GENERIC_SEARCH_PARAM,
 } from '../config'
-import { getOfferGenericBrainbit, getOfferGenericMuse } from '../offers'
+import {
+  getOfferGenericBrainbit,
+  getOfferGenericMuse,
+  getOfferSuperBowlBrainbit,
+} from '../offers'
 import { BundleType } from '../types'
 import { getSearchParam, isStaging } from '../utils'
 import {
   handleMuseInBoxBadge,
   parsePriceValue,
   setActive,
+  setActiveTab,
   setDisplay,
   showOfferBadge,
 } from './utils'
@@ -46,10 +51,14 @@ export function handleCart() {
     ) as HtmlAEl,
   }
 
-  const isOffer =
+  const isOfferGeneric =
     getSearchParam('offer') === CES_DISCOUNT_OFFER ||
     (getSearchParam('offer') === OFFER_GENERIC_SEARCH_PARAM &&
       window.posthog?.isFeatureEnabled('is-generic-offer-on'))
+
+  const isOfferSuperBowl = window.posthog?.isFeatureEnabled(
+    'is-super-bowl-offer-on'
+  )
 
   const noDiscountProps = {
     discountName: '',
@@ -60,9 +69,11 @@ export function handleCart() {
   const bundles = {
     [BundleType.SUBSCRIPTION_ONLY]: noDiscountProps,
     [BundleType.SUBSCRIPTION_ONLY + '-monthly']: noDiscountProps,
-    [BundleType.MUSE]: isOffer ? getOfferGenericMuse() : noDiscountProps,
-    [BundleType.BRAINBIT]: isOffer
+    [BundleType.MUSE]: isOfferGeneric ? getOfferGenericMuse() : noDiscountProps,
+    [BundleType.BRAINBIT]: isOfferGeneric
       ? getOfferGenericBrainbit()
+      : isOfferSuperBowl
+      ? getOfferSuperBowlBrainbit()
       : noDiscountProps,
   }
 
@@ -204,8 +215,10 @@ export function handleCart() {
     elements.paymentUpfront?.addEventListener('click', setPaymentUpfront)
     elements.paymentKlarna?.addEventListener('click', setPaymentKlarna)
 
-    if (isOffer) {
+    if (isOfferGeneric) {
       setBundleMuse()
+    } else if (isOfferSuperBowl) {
+      setBundleBrainbit()
     } else {
       setSubscriptionOnly()
     }
@@ -216,7 +229,7 @@ export function handleCart() {
   handleCartChange()
   handleMuseInBoxBadge()
 
-  if (isOffer) {
+  if (isOfferGeneric) {
     showOfferBadge(
       '#bundle-muse .discount-badge',
       getOfferGenericMuse().discountName + ' applied'
@@ -263,5 +276,32 @@ export function handleCart() {
         setDisplay(brainbitOrigPriceElement, true)
       }
     }
+  } else if (isOfferSuperBowl) {
+    showOfferBadge(
+      '#bundle-brainbit .discount-badge',
+      getOfferSuperBowlBrainbit().discountName + ' applied'
+    )
+
+    const brainbitOrigPriceElement = elements.bundleBrainbit?.querySelector(
+      '.price.text-style-strikethrough'
+    )
+
+    const brainbitOrigPrice =
+      brainbitOrigPriceElement && parsePriceValue(brainbitOrigPriceElement)
+
+    if (brainbitOrigPrice) {
+      const brainbitOfferPrice =
+        brainbitOrigPrice - getOfferSuperBowlBrainbit().amountOff
+
+      const brainbitPriceToPayElement =
+        elements.bundleBrainbit?.querySelector('.price.to-pay')
+
+      if (brainbitPriceToPayElement) {
+        brainbitPriceToPayElement.textContent = `$${brainbitOfferPrice}`
+        setDisplay(brainbitOrigPriceElement, true)
+      }
+    }
   }
+
+  setActiveTab('.product-tabs_tab', 1)
 }
