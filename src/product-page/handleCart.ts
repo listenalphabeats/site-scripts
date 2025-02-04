@@ -46,16 +46,6 @@ export function handleCart() {
     ) as HtmlAEl,
   }
 
-  console.debug(
-    '🟡 is-generic-offer-on:',
-    window.posthog?.isFeatureEnabled('is-generic-offer-on')
-  )
-
-  console.debug(
-    '🟡 is-super-bowl-offer-on:',
-    window.posthog?.isFeatureEnabled('is-super-bowl-offer-on')
-  )
-
   const isOffer =
     getSearchParam('offer') === CES_DISCOUNT_OFFER ||
     (getSearchParam('offer') === OFFER_GENERIC_SEARCH_PARAM &&
