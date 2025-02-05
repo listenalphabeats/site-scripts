@@ -231,11 +231,11 @@ export function handleCart() {
 
   if (isOfferGeneric) {
     showOfferBadge(
-      '#bundle-muse .discount-badge',
+      '#bundle-muse .offer-badge-hidden',
       getOfferGenericMuse().discountName + ' applied'
     )
     showOfferBadge(
-      '#bundle-brainbit .discount-badge',
+      '#bundle-brainbit .offer-badge-hidden',
       getOfferGenericBrainbit().discountName + ' applied'
     )
     const museOrigPriceElement = elements.bundleMuse?.querySelector(
@@ -278,7 +278,7 @@ export function handleCart() {
     }
   } else if (isOfferSuperBowl) {
     showOfferBadge(
-      '#bundle-brainbit .discount-badge',
+      '#bundle-brainbit .offer-badge-hidden',
       getOfferSuperBowlBrainbit().discountName + ' applied'
     )
 
