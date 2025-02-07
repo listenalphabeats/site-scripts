@@ -56,9 +56,12 @@ export function handleCart() {
     (getSearchParam('offer') === OFFER_GENERIC_SEARCH_PARAM &&
       window.posthog?.isFeatureEnabled('is-generic-offer-on'))
 
-  const isOfferSuperBowl = window.posthog?.isFeatureEnabled(
-    'is-super-bowl-offer-on'
-  )
+  // const isOfferSuperBowl = window.posthog?.isFeatureEnabled(
+  //   'is-super-bowl-offer-on'
+  // )
+
+  /** @todo Remove on Feb 15 AM (Saturday) */
+  const isOfferSuperBowl = true
 
   const noDiscountProps = {
     discountName: '',
