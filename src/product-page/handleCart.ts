@@ -3,18 +3,13 @@ import {
   MUSE_IN_BOX_TRIAL_SEARCH_PARAM,
   OFFER_GENERIC_SEARCH_PARAM,
 } from '../config'
-import {
-  getOfferGenericBrainbit,
-  getOfferGenericMuse,
-  getOfferSuperBowlBrainbit,
-} from '../offers'
+import { getOfferGenericBrainbit, getOfferGenericMuse } from '../offers'
 import { BundleType } from '../types'
 import { getSearchParam, isStaging } from '../utils'
 import {
   handleMuseInBoxBadge,
   parsePriceValue,
   setActive,
-  setActiveTab,
   setDisplay,
   showOfferBadge,
 } from './utils'
@@ -56,13 +51,6 @@ export function handleCart() {
     (getSearchParam('offer') === OFFER_GENERIC_SEARCH_PARAM &&
       window.posthog?.isFeatureEnabled('is-generic-offer-on'))
 
-  // const isOfferSuperBowl = window.posthog?.isFeatureEnabled(
-  //   'is-super-bowl-offer-on'
-  // )
-
-  /** @todo Remove on Feb 15 AM (Saturday) */
-  const isOfferSuperBowl = true
-
   const noDiscountProps = {
     discountName: '',
     amountOff: 0,
@@ -75,8 +63,6 @@ export function handleCart() {
     [BundleType.MUSE]: isOfferGeneric ? getOfferGenericMuse() : noDiscountProps,
     [BundleType.BRAINBIT]: isOfferGeneric
       ? getOfferGenericBrainbit()
-      : isOfferSuperBowl
-      ? getOfferSuperBowlBrainbit()
       : noDiscountProps,
   }
 
@@ -220,8 +206,6 @@ export function handleCart() {
 
     if (isOfferGeneric) {
       setBundleMuse()
-    } else if (isOfferSuperBowl) {
-      setBundleBrainbit()
     } else {
       setSubscriptionOnly()
     }
@@ -279,32 +263,5 @@ export function handleCart() {
         setDisplay(brainbitOrigPriceElement, true)
       }
     }
-  } else if (isOfferSuperBowl) {
-    showOfferBadge(
-      '#bundle-brainbit .offer-badge-hidden',
-      getOfferSuperBowlBrainbit().discountName + ' applied'
-    )
-
-    const brainbitOrigPriceElement = elements.bundleBrainbit?.querySelector(
-      '.price.text-style-strikethrough'
-    )
-
-    const brainbitOrigPrice =
-      brainbitOrigPriceElement && parsePriceValue(brainbitOrigPriceElement)
-
-    if (brainbitOrigPrice) {
-      const brainbitOfferPrice =
-        brainbitOrigPrice - getOfferSuperBowlBrainbit().amountOff
-
-      const brainbitPriceToPayElement =
-        elements.bundleBrainbit?.querySelector('.price.to-pay')
-
-      if (brainbitPriceToPayElement) {
-        brainbitPriceToPayElement.textContent = `$${brainbitOfferPrice}`
-        setDisplay(brainbitOrigPriceElement, true)
-      }
-    }
-
-    setActiveTab('.product-tabs_tab', 1)
   }
 }
