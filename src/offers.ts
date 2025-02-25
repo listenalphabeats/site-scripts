@@ -15,3 +15,11 @@ export function getOfferGenericBrainbit() {
     amountOff: 250,
   }
 }
+
+export function getOfferMusersFeb() {
+  return {
+    discountName: '20% off the annual membership',
+    couponId: isStaging() ? 'zQ6JJHDP' : 'gI3zXMpo',
+    amountOff: 19.8,
+  }
+}
