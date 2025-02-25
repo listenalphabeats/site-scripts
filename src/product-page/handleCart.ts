@@ -2,8 +2,13 @@ import {
   CES_DISCOUNT_OFFER,
   MUSE_IN_BOX_TRIAL_SEARCH_PARAM,
   OFFER_GENERIC_SEARCH_PARAM,
+  OFFER_MUSERS_FEB_SEARCH_PARAM,
 } from '../config'
-import { getOfferGenericBrainbit, getOfferGenericMuse } from '../offers'
+import {
+  getOfferGenericBrainbit,
+  getOfferGenericMuse,
+  getOfferMusersFeb,
+} from '../offers'
 import { BundleType } from '../types'
 import { getSearchParam, isStaging } from '../utils'
 import {
@@ -51,6 +56,9 @@ export function handleCart() {
     (getSearchParam('offer') === OFFER_GENERIC_SEARCH_PARAM &&
       window.posthog?.isFeatureEnabled('is-generic-offer-on'))
 
+  const isOfferMusersFeb =
+    getSearchParam('offer') === OFFER_MUSERS_FEB_SEARCH_PARAM
+
   const noDiscountProps = {
     discountName: '',
     amountOff: 0,
@@ -58,7 +66,9 @@ export function handleCart() {
   }
 
   const bundles = {
-    [BundleType.SUBSCRIPTION_ONLY]: noDiscountProps,
+    [BundleType.SUBSCRIPTION_ONLY]: isOfferMusersFeb
+      ? getOfferMusersFeb()
+      : noDiscountProps,
     [BundleType.SUBSCRIPTION_ONLY + '-monthly']: noDiscountProps,
     [BundleType.MUSE]: isOfferGeneric ? getOfferGenericMuse() : noDiscountProps,
     [BundleType.BRAINBIT]: isOfferGeneric
@@ -261,6 +271,34 @@ export function handleCart() {
       if (brainbitPriceToPayElement) {
         brainbitPriceToPayElement.textContent = `$${brainbitOfferPrice}`
         setDisplay(brainbitOrigPriceElement, true)
+      }
+    }
+  } else if (isOfferMusersFeb) {
+    showOfferBadge(
+      '#badge-annual-sub-offer',
+      getOfferMusersFeb().discountName + ' applied'
+    )
+
+    const annualSubOrigPriceElement = elements.subscriptionOnly?.querySelector(
+      '.price.text-style-strikethrough'
+    )
+
+    const annualSubOrigPrice =
+      annualSubOrigPriceElement && parsePriceValue(annualSubOrigPriceElement)
+
+    if (annualSubOrigPrice) {
+      const annualSubOfferPrice =
+        annualSubOrigPrice - getOfferMusersFeb().amountOff
+
+      const annualSubPriceToPayElement =
+        elements.subscriptionOnly?.querySelector('.price.to-pay')
+
+      if (annualSubPriceToPayElement) {
+        annualSubPriceToPayElement.textContent = `$${annualSubOfferPrice.toFixed(
+          2
+        )}/year`
+
+        setDisplay(annualSubOrigPriceElement, true)
       }
     }
   }
