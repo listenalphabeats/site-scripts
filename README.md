@@ -13,5 +13,8 @@
 
 ```html
 <!-- CDN -->
-<script src="https://cdn.jsdelivr.net/gh/listenalphabeats/site-scripts@1.1.21/dist/bundle.js"></script>
+<script
+  defer
+  src="https://cdn.jsdelivr.net/gh/listenalphabeats/site-scripts@1.1.21/dist/bundle.js"
+></script>
 ```
