@@ -1,0 +1,60 @@
+<script>
+  /** HELPERS =============================================== */
+  function parseStripeSessionId() {
+    return new URLSearchParams(window.location.search).get("session_id");
+  }
+
+  function isURLEncoded(str) {
+    try {
+      const decodedStr = decodeURIComponent(str);
+      return encodeURIComponent(decodedStr) !== str;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  function safeDecodeURIComponent(str) {
+    return isURLEncoded(str) ? decodeURIComponent(str) : str;
+  }
+
+  function getCookieData(name) {
+    name += "=";
+    const cookies = document.cookie.split(";");
+    const cookie = cookies.find(
+      (c) => c.trim().substring(0, name.length) === name
+    );
+
+    const data = cookie
+      ? JSON.parse(safeDecodeURIComponent(cookie.trim().substring(name.length)))
+      : null;
+
+    return data;
+  }
+
+  /** MAIN CODE ===================================================== */
+  function trackPurchaseConversion() {
+    const stripeSessionId = parseStripeSessionId();
+
+    if (!stripeSessionId) {
+      return;
+    }
+
+    const cookieData = getCookieData(stripeSessionId);
+
+    if (!cookieData || !cookieData.price) {
+      return;
+    }
+
+    const dataLayer = window.dataLayer || [];
+    dataLayer.push({
+      event: "purchase_trigger",
+      ecommerce: {
+        transaction_id: stripeSessionId,
+        value: cookieData.price,
+        currency: cookieData.currency || "USD",
+      },
+    });
+  }
+
+  window.addEventListener("load", trackPurchaseConversion);
+</script>
