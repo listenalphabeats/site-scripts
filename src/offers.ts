@@ -23,3 +23,11 @@ export function getOfferMusersFeb() {
     amountOff: 19.8,
   }
 }
+
+export function getOfferMusersPartner() {
+  return {
+    discountName: '15% Muse partner discount',
+    couponId: isStaging() ? 'mTdF2WaN' : 'fEiKmnij',
+    amountOff: 14.85,
+  }
+}

@@ -2,12 +2,14 @@ import {
   CES_DISCOUNT_OFFER,
   MUSE_IN_BOX_TRIAL_SEARCH_PARAM,
   OFFER_GENERIC_SEARCH_PARAM,
+  OFFER_MUSERS_ACTIVATION_SEARCH_PARAM,
   OFFER_MUSERS_FEB_SEARCH_PARAM,
 } from '../config'
 import {
   getOfferGenericBrainbit,
   getOfferGenericMuse,
   getOfferMusersFeb,
+  getOfferMusersPartner,
 } from '../offers'
 import { BundleType } from '../types'
 import { getSearchParam, isStaging } from '../utils'
@@ -59,6 +61,9 @@ export function handleCart() {
   const isOfferMusersFeb =
     getSearchParam('offer') === OFFER_MUSERS_FEB_SEARCH_PARAM
 
+  const isOfferMusersPartner =
+    getSearchParam('offer') === OFFER_MUSERS_ACTIVATION_SEARCH_PARAM
+
   const noDiscountProps = {
     discountName: '',
     amountOff: 0,
@@ -68,6 +73,8 @@ export function handleCart() {
   const bundles = {
     [BundleType.SUBSCRIPTION_ONLY]: isOfferMusersFeb
       ? getOfferMusersFeb()
+      : isOfferMusersPartner
+      ? getOfferMusersPartner()
       : noDiscountProps,
     [BundleType.SUBSCRIPTION_ONLY + '-monthly']: noDiscountProps,
     [BundleType.MUSE]: isOfferGeneric ? getOfferGenericMuse() : noDiscountProps,
@@ -289,6 +296,34 @@ export function handleCart() {
     if (annualSubOrigPrice) {
       const annualSubOfferPrice =
         annualSubOrigPrice - getOfferMusersFeb().amountOff
+
+      const annualSubPriceToPayElement =
+        elements.subscriptionOnly?.querySelector('.price.to-pay')
+
+      if (annualSubPriceToPayElement) {
+        annualSubPriceToPayElement.textContent = `$${annualSubOfferPrice.toFixed(
+          2
+        )}/year`
+
+        setDisplay(annualSubOrigPriceElement, true)
+      }
+    }
+  } else if (isOfferMusersPartner) {
+    showOfferBadge(
+      '#badge-annual-sub-offer',
+      getOfferMusersPartner().discountName + ' applied'
+    )
+
+    const annualSubOrigPriceElement = elements.subscriptionOnly?.querySelector(
+      '.price.text-style-strikethrough'
+    )
+
+    const annualSubOrigPrice =
+      annualSubOrigPriceElement && parsePriceValue(annualSubOrigPriceElement)
+
+    if (annualSubOrigPrice) {
+      const annualSubOfferPrice =
+        annualSubOrigPrice - getOfferMusersPartner().amountOff
 
       const annualSubPriceToPayElement =
         elements.subscriptionOnly?.querySelector('.price.to-pay')
