@@ -10,13 +10,15 @@ export function handleMusePartnerDiscount() {
 
   const ctaFreeTrial = document.getElementById('free-trial')
   const ctaPreOrder = document.getElementById('pre-order')
+  const ctaActivationOffer = document.getElementById('activation-offer')
 
-  if (!ctaFreeTrial || !ctaPreOrder) return
+  if (!ctaFreeTrial || !ctaPreOrder || !ctaActivationOffer) return
 
-  setDisplay(ctaFreeTrial, true)
+  setDisplay(ctaFreeTrial, false)
   setDisplay(ctaPreOrder, false)
+  setDisplay(ctaActivationOffer, true)
 
-  const button = ctaFreeTrial.querySelector('a')
+  const button = ctaActivationOffer.querySelector('a')
   if (!button) return
 
   const url = new URL(button.href)

@@ -1,7 +1,4 @@
-import {
-  MUSE_IN_BOX_TRIAL_SEARCH_PARAM,
-  OFFER_MUSERS_ACTIVATION_SEARCH_PARAM,
-} from '../config'
+import { MUSE_IN_BOX_TRIAL_SEARCH_PARAM } from '../config'
 
 export function handleMuseInBoxOffer() {
   const params = new URLSearchParams(window.location.search)
