@@ -1,4 +1,6 @@
 import { OFFER_MUSERS_ACTIVATION_SEARCH_PARAM } from '../config'
+import { isStaging } from '../utils'
+import { getOfferMusersPartner } from '../offers'
 
 export function handleMusePartnerDiscount() {
   const params = new URLSearchParams(window.location.search)
@@ -21,8 +23,20 @@ export function handleMusePartnerDiscount() {
   const button = ctaActivationOffer.querySelector('a')
   if (!button) return
 
-  const url = new URL(button.href)
-  url.searchParams.set('offer', OFFER_MUSERS_ACTIVATION_SEARCH_PARAM)
-  url.searchParams.set('tabIndex', '0')
-  button.href = url.toString()
+  const baseUrl = isStaging()
+    ? 'https://accounts.development.listenalphabeats.nl'
+    : 'https://accounts.listenalphabeats.com'
+
+  const offer = getOfferMusersPartner()
+
+  // Create URL and set parameters programmatically
+  const signupUrl = new URL('/sign-up', baseUrl)
+  signupUrl.searchParams.set('bundleType', 'subscription-only')
+  signupUrl.searchParams.set('plan', 'YEARLY')
+  signupUrl.searchParams.set('discountName', '15% Muse partner discount')
+  signupUrl.searchParams.set('amountOff', offer.amountOff.toString())
+  signupUrl.searchParams.set('couponId', offer.couponId)
+  signupUrl.searchParams.set('trialBadge', '7-day free trial included')
+
+  button.href = signupUrl.toString()
 }
