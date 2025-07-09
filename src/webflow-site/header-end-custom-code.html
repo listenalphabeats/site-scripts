@@ -1,22 +1,40 @@
 <!-- Google Tag Manager -->
-<script>(function (w, d, s, l, i) {
-    w[l] = w[l] || []; w[l].push({
-      'gtm.start':
-        new Date().getTime(), event: 'gtm.js'
-    }); var f = d.getElementsByTagName(s)[0],
-      j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
-        'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
-  })(window, document, 'script', 'dataLayer', 'GTM-5LR2NDB');
+<script>
+  ;(function (w, d, s, l, i) {
+    w[l] = w[l] || []
+    w[l].push({
+      'gtm.start': new Date().getTime(),
+      event: 'gtm.js',
+    })
+    var f = d.getElementsByTagName(s)[0],
+      j = d.createElement(s),
+      dl = l != 'dataLayer' ? '&l=' + l : ''
+    j.async = true
+    j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl
+    f.parentNode.insertBefore(j, f)
+  })(window, document, 'script', 'dataLayer', 'GTM-5LR2NDB')
 </script>
 <!-- End Google Tag Manager -->
 
 <!-- Rewardful -->
-<script defer src='https://r.wdfl.co/rw.js' data-rewardful='5582f5'></script>
-<script>(function (w, r) { w._rwq = r; w[r] = w[r] || function () { (w[r].q = w[r].q || []).push(arguments) } })(window, 'rewardful');</script>
+<script defer src="https://r.wdfl.co/rw.js" data-rewardful="5582f5"></script>
+<script>
+  ;(function (w, r) {
+    w._rwq = r
+    w[r] =
+      w[r] ||
+      function () {
+        ;(w[r].q = w[r].q || []).push(arguments)
+      }
+  })(window, 'rewardful')
+</script>
 <!-- End Rewardful -->
 
 <!-- CDN -->
-<script defer src="https://cdn.jsdelivr.net/gh/listenalphabeats/site-scripts@1.1.21/dist/bundle.js"></script>
+<script
+  defer
+  src="https://cdn.jsdelivr.net/gh/listenalphabeats/site-scripts@1.1.23/dist/bundle.js"
+></script>
 
 <script>
   const script = document.createElement('script')
@@ -27,7 +45,6 @@
       : 'https://cdn.jsdelivr.net/gh/listenalphabeats/site-scripts@1.1.20/dist/bundle.js'
   document.head.appendChild(script)
 </script>
-
 
 <script>
   window.runWhenAvailable = ({
@@ -63,170 +80,334 @@
   }
 </script>
 
-
 <!-- [External Scripts by Digital Sparks] -->
-<script defer src="https://cdn.jsdelivr.net/npm/@finsweet/attributes-modal@1/modal.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/@finsweet/attributes-scrolldisable@1/scrolldisable.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script
+  defer
+  src="https://cdn.jsdelivr.net/npm/@finsweet/attributes-modal@1/modal.js"
+></script>
+<script
+  defer
+  src="https://cdn.jsdelivr.net/npm/@finsweet/attributes-scrolldisable@1/scrolldisable.js"
+></script>
+<script
+  defer
+  src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"
+></script>
 
 <!-- -->
-<script defer src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
-<script defer src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/additional-methods.min.js"></script>
-
+<script
+  defer
+  src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"
+></script>
+<script
+  defer
+  src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/additional-methods.min.js"
+></script>
 
 <script defer src="https://unpkg.com/split-type"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script
+  defer
+  src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"
+></script>
+<script
+  defer
+  src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"
+></script>
 
 <!-- [Attributes by Finsweet] Disable scrolling -->
-<script defer src="https://cdn.jsdelivr.net/npm/@finsweet/attributes-scrolldisable@1/scrolldisable.js"></script>
+<script
+  defer
+  src="https://cdn.jsdelivr.net/npm/@finsweet/attributes-scrolldisable@1/scrolldisable.js"
+></script>
 
 <!-- [Attributes by Finsweet] CMS Tabs -->
-<script async src="https://cdn.jsdelivr.net/npm/@finsweet/attributes-cmstabs@1/cmstabs.js"></script>
+<script
+  async
+  src="https://cdn.jsdelivr.net/npm/@finsweet/attributes-cmstabs@1/cmstabs.js"
+></script>
 
 <script>
-  var Webflow = Webflow || [];
+  var Webflow = Webflow || []
   Webflow.push(function () {
-    gsap.config({ nullTargetWarn: false });
-    gsap.registerPlugin(ScrollTrigger);
-    var g = gsap.matchMedia(), d = 0, f = null;
+    gsap.config({ nullTargetWarn: false })
+    gsap.registerPlugin(ScrollTrigger)
+    var g = gsap.matchMedia(),
+      d = 0,
+      f = null
 
-    window.addEventListener("scroll", function () {
-      var a = window.pageYOffset || document.documentElement.scrollTop;
-      if (Math.abs(d - a) >= 32) {
-        if (a > d && f !== "down") {
-          gsap.to(".nav_component", { yPercent: -100, ease: "power1.inOut", duration: 0.4 });
-          if (document.querySelector(".scroll_text_nav")) {
-            g.add("(min-width: 768px)", function () {
-              var top = gsap.getProperty(".scroll_text_nav", "top");
-              gsap.to(".scroll_text_nav", {
-                top: top - document.querySelector(".nav_component").clientHeight,
-                ease: "power1.inOut",
-                duration: 0.4,
-                onComplete: function () { setTimeout(ScrollTrigger.refresh, 5); }
-              });
-            });
+    window.addEventListener(
+      'scroll',
+      function () {
+        var a = window.pageYOffset || document.documentElement.scrollTop
+        if (Math.abs(d - a) >= 32) {
+          if (a > d && f !== 'down') {
+            gsap.to('.nav_component', {
+              yPercent: -100,
+              ease: 'power1.inOut',
+              duration: 0.4,
+            })
+            if (document.querySelector('.scroll_text_nav')) {
+              g.add('(min-width: 768px)', function () {
+                var top = gsap.getProperty('.scroll_text_nav', 'top')
+                gsap.to('.scroll_text_nav', {
+                  top:
+                    top - document.querySelector('.nav_component').clientHeight,
+                  ease: 'power1.inOut',
+                  duration: 0.4,
+                  onComplete: function () {
+                    setTimeout(ScrollTrigger.refresh, 5)
+                  },
+                })
+              })
+            }
+            f = 'down'
+          } else if (a < d && f !== 'up') {
+            gsap.to('.nav_component', {
+              yPercent: 0,
+              ease: 'power1.inOut',
+              duration: 0.4,
+            })
+            if (document.querySelector('.scroll_text_nav')) {
+              g.add('(min-width: 768px)', function () {
+                var top = gsap.getProperty('.scroll_text_nav', 'top')
+                gsap.to('.scroll_text_nav', {
+                  top:
+                    top + document.querySelector('.nav_component').clientHeight,
+                  ease: 'power1.inOut',
+                  duration: 0.4,
+                  onComplete: function () {
+                    setTimeout(ScrollTrigger.refresh, 5)
+                  },
+                })
+              })
+            }
+            f = 'up'
           }
-          f = "down";
-        } else if (a < d && f !== "up") {
-          gsap.to(".nav_component", { yPercent: 0, ease: "power1.inOut", duration: 0.4 });
-          if (document.querySelector(".scroll_text_nav")) {
-            g.add("(min-width: 768px)", function () {
-              var top = gsap.getProperty(".scroll_text_nav", "top");
-              gsap.to(".scroll_text_nav", {
-                top: top + document.querySelector(".nav_component").clientHeight,
-                ease: "power1.inOut",
-                duration: 0.4,
-                onComplete: function () { setTimeout(ScrollTrigger.refresh, 5); }
-              });
-            });
-          }
-          f = "up";
+          d = a <= 0 ? 0 : a
         }
-        d = a <= 0 ? 0 : a;
-      }
-    }, false);
+      },
+      false
+    )
 
-    g.add("(min-width: 991px)", function () {
-      if (document.querySelector(".app-screen_component")) {
+    g.add('(min-width: 991px)', function () {
+      if (document.querySelector('.app-screen_component')) {
         var setAppScreenTop = function () {
-          d = (document.documentElement.clientHeight - document.querySelector(".app-screen_component").clientHeight) / 2;
-          gsap.set(".app-screen_component", { top: d });
-        };
+          d =
+            (document.documentElement.clientHeight -
+              document.querySelector('.app-screen_component').clientHeight) /
+            2
+          gsap.set('.app-screen_component', { top: d })
+        }
 
         ScrollTrigger.create({
           markers: false,
-          trigger: ".app-screen_component",
-          onEnter: setAppScreenTop
-        });
+          trigger: '.app-screen_component',
+          onEnter: setAppScreenTop,
+        })
 
-        var e;
-        window.addEventListener("resize", function () {
-          clearTimeout(e);
+        var e
+        window.addEventListener('resize', function () {
+          clearTimeout(e)
           e = setTimeout(function () {
-            ScrollTrigger.refresh();
-            setAppScreenTop();
-          }, 75);
-        });
+            ScrollTrigger.refresh()
+            setAppScreenTop()
+          }, 75)
+        })
 
-        gsap.set(".app-screen_panel:not(:first-child) > div", { autoAlpha: 0 });
-        var panels = document.querySelectorAll(".app-screen_panel");
-        document.querySelectorAll(".phone_scroll-anchor").forEach(function (anchor, c) {
-          gsap.timeline({
-            defaults: { duration: 0.4, ease: "power2.out" },
-            scrollTrigger: {
-              markers: false,
-              trigger: anchor,
-              start: "top bottom",
-              end: "bottom bottom",
-              onEnter: function () {
-                gsap.timeline()
-                  .to(panels[c].querySelector(".app_phone-wrap"), { autoAlpha: 1, ease: "none" })
-                  .to(panels[c].querySelector(".app_text-wrap"), { yPercent: 0, autoAlpha: 1 }, "<")
-                  .to(panels[c].querySelector(".app_asset-wrap"), { yPercent: 0, autoAlpha: 1 }, "<");
+        gsap.set('.app-screen_panel:not(:first-child) > div', { autoAlpha: 0 })
+        var panels = document.querySelectorAll('.app-screen_panel')
+        document
+          .querySelectorAll('.phone_scroll-anchor')
+          .forEach(function (anchor, c) {
+            gsap.timeline({
+              defaults: { duration: 0.4, ease: 'power2.out' },
+              scrollTrigger: {
+                markers: false,
+                trigger: anchor,
+                start: 'top bottom',
+                end: 'bottom bottom',
+                onEnter: function () {
+                  gsap
+                    .timeline()
+                    .to(panels[c].querySelector('.app_phone-wrap'), {
+                      autoAlpha: 1,
+                      ease: 'none',
+                    })
+                    .to(
+                      panels[c].querySelector('.app_text-wrap'),
+                      { yPercent: 0, autoAlpha: 1 },
+                      '<'
+                    )
+                    .to(
+                      panels[c].querySelector('.app_asset-wrap'),
+                      { yPercent: 0, autoAlpha: 1 },
+                      '<'
+                    )
+                },
+                onEnterBack: function () {
+                  gsap
+                    .timeline()
+                    .to(panels[c].querySelector('.app_phone-wrap'), {
+                      yPercent: 0,
+                      autoAlpha: 1,
+                      ease: 'none',
+                    })
+                    .to(
+                      panels[c].querySelector('.app_text-wrap'),
+                      { yPercent: 0, autoAlpha: 1 },
+                      '<'
+                    )
+                    .to(
+                      panels[c].querySelector('.app_asset-wrap'),
+                      { yPercent: 0, autoAlpha: 1 },
+                      '<'
+                    )
+                },
+                onLeave: function () {
+                  if (c !== panels.length - 1) {
+                    gsap
+                      .timeline()
+                      .to(panels[c].querySelector('.app_phone-wrap'), {
+                        autoAlpha: 0,
+                        ease: 'none',
+                      })
+                      .to(
+                        panels[c].querySelector('.app_asset-wrap'),
+                        { yPercent: 10, autoAlpha: 0 },
+                        '<'
+                      )
+                      .to(
+                        panels[c].querySelector('.app_text-wrap'),
+                        { yPercent: 10, autoAlpha: 0 },
+                        '<'
+                      )
+                  }
+                },
+                onLeaveBack: function () {
+                  if (c !== 0) {
+                    gsap
+                      .timeline()
+                      .to(panels[c].querySelector('.app_phone-wrap'), {
+                        autoAlpha: 0,
+                        ease: 'none',
+                      })
+                      .to(
+                        panels[c].querySelector('.app_asset-wrap'),
+                        { yPercent: 10, autoAlpha: 0 },
+                        '<'
+                      )
+                      .to(
+                        panels[c].querySelector('.app_text-wrap'),
+                        { yPercent: 10, autoAlpha: 0 },
+                        '<'
+                      )
+                  }
+                },
               },
-              onEnterBack: function () {
-                gsap.timeline()
-                  .to(panels[c].querySelector(".app_phone-wrap"), { yPercent: 0, autoAlpha: 1, ease: "none" })
-                  .to(panels[c].querySelector(".app_text-wrap"), { yPercent: 0, autoAlpha: 1 }, "<")
-                  .to(panels[c].querySelector(".app_asset-wrap"), { yPercent: 0, autoAlpha: 1 }, "<");
-              },
-              onLeave: function () {
-                if (c !== panels.length - 1) {
-                  gsap.timeline()
-                    .to(panels[c].querySelector(".app_phone-wrap"), { autoAlpha: 0, ease: "none" })
-                    .to(panels[c].querySelector(".app_asset-wrap"), { yPercent: 10, autoAlpha: 0 }, "<")
-                    .to(panels[c].querySelector(".app_text-wrap"), { yPercent: 10, autoAlpha: 0 }, "<");
-                }
-              },
-              onLeaveBack: function () {
-                if (c !== 0) {
-                  gsap.timeline()
-                    .to(panels[c].querySelector(".app_phone-wrap"), { autoAlpha: 0, ease: "none" })
-                    .to(panels[c].querySelector(".app_asset-wrap"), { yPercent: 10, autoAlpha: 0 }, "<")
-                    .to(panels[c].querySelector(".app_text-wrap"), { yPercent: 10, autoAlpha: 0 }, "<");
-                }
-              }
-            }
-          });
-        });
+            })
+          })
       }
 
-      document.querySelectorAll(".scroll_component").forEach(function (component) {
-        gsap.set(component.querySelectorAll(".scroll_images img:not(:first-child)"), { autoAlpha: 0 });
-        component.querySelectorAll(".scroll_text_slide").forEach(function (slide, b) {
-          gsap.timeline({
-            scrollTrigger: {
-              scrub: true,
-              markers: false,
-              trigger: slide.querySelector(".heading-style-h2"),
-              start: function () {
-                return "top " + (gsap.getProperty(component.querySelector(".scroll_text_nav"), "top") + component.querySelector(".scroll_text_nav").clientHeight + 32) + "px";
-              },
-              end: function () {
-                return "top " + (gsap.getProperty(component.querySelector(".scroll_text_nav"), "top") + component.querySelector(".scroll_text_nav").clientHeight) + "px";
-              },
-              toggleActions: "play play reverse reverse",
-              onEnter: function () {
-                gsap.timeline()
-                  .to(component.querySelectorAll(".scroll_images img")[b], { autoAlpha: b === 2 ? 1 : 0, ease: "none" }, "<")
-                  .to(component.querySelectorAll(".scroll_images img")[b + 1], { autoAlpha: 1, ease: "none" }, "<");
-              },
-              onEnterBack: function () {
-                gsap.timeline()
-                  .to(component.querySelectorAll(".scroll_images img")[b], { autoAlpha: 1, ease: "none" }, "<")
-                  .to(component.querySelectorAll(".scroll_images img")[b + 1], { autoAlpha: 0, ease: "none" }, "<");
-              }
-            }
-          }).to(slide, { opacity: 0 }).fromTo(component.querySelectorAll(".scroll_text_slide")[b + 1], { opacity: 0.2 }, { opacity: 1 }, "<");
-        });
-      });
-    });
+      document
+        .querySelectorAll('.scroll_component')
+        .forEach(function (component) {
+          gsap.set(
+            component.querySelectorAll('.scroll_images img:not(:first-child)'),
+            { autoAlpha: 0 }
+          )
+          component
+            .querySelectorAll('.scroll_text_slide')
+            .forEach(function (slide, b) {
+              gsap
+                .timeline({
+                  scrollTrigger: {
+                    scrub: true,
+                    markers: false,
+                    trigger: slide.querySelector('.heading-style-h2'),
+                    start: function () {
+                      return (
+                        'top ' +
+                        (gsap.getProperty(
+                          component.querySelector('.scroll_text_nav'),
+                          'top'
+                        ) +
+                          component.querySelector('.scroll_text_nav')
+                            .clientHeight +
+                          32) +
+                        'px'
+                      )
+                    },
+                    end: function () {
+                      return (
+                        'top ' +
+                        (gsap.getProperty(
+                          component.querySelector('.scroll_text_nav'),
+                          'top'
+                        ) +
+                          component.querySelector('.scroll_text_nav')
+                            .clientHeight) +
+                        'px'
+                      )
+                    },
+                    toggleActions: 'play play reverse reverse',
+                    onEnter: function () {
+                      gsap
+                        .timeline()
+                        .to(
+                          component.querySelectorAll('.scroll_images img')[b],
+                          { autoAlpha: b === 2 ? 1 : 0, ease: 'none' },
+                          '<'
+                        )
+                        .to(
+                          component.querySelectorAll('.scroll_images img')[
+                            b + 1
+                          ],
+                          { autoAlpha: 1, ease: 'none' },
+                          '<'
+                        )
+                    },
+                    onEnterBack: function () {
+                      gsap
+                        .timeline()
+                        .to(
+                          component.querySelectorAll('.scroll_images img')[b],
+                          { autoAlpha: 1, ease: 'none' },
+                          '<'
+                        )
+                        .to(
+                          component.querySelectorAll('.scroll_images img')[
+                            b + 1
+                          ],
+                          { autoAlpha: 0, ease: 'none' },
+                          '<'
+                        )
+                    },
+                  },
+                })
+                .to(slide, { opacity: 0 })
+                .fromTo(
+                  component.querySelectorAll('.scroll_text_slide')[b + 1],
+                  { opacity: 0.2 },
+                  { opacity: 1 },
+                  '<'
+                )
+            })
+        })
+    })
 
-    document.querySelectorAll("[split-type]").forEach(function (a) {
-      var e = new SplitType(a, { types: "lines, words, chars", tagName: "span" });
-      gsap.set(e.words, { rotateZ: 4, rotateX: 40, yPercent: 50, transformOrigin: "left bottom", opacity: 0 });
-      gsap.set(a, { autoAlpha: 1 });
+    document.querySelectorAll('[split-type]').forEach(function (a) {
+      var e = new SplitType(a, {
+        types: 'lines, words, chars',
+        tagName: 'span',
+      })
+      gsap.set(e.words, {
+        rotateZ: 4,
+        rotateX: 40,
+        yPercent: 50,
+        transformOrigin: 'left bottom',
+        opacity: 0,
+      })
+      gsap.set(a, { autoAlpha: 1 })
       gsap.to(e.words, {
         duration: 0.5,
         rotateZ: 0,
@@ -236,31 +417,31 @@
         yPercent: 0,
         opacity: 1,
         stagger: 0.02,
-        ease: "power2.out",
+        ease: 'power2.out',
         scrollTrigger: {
           markers: false,
           trigger: a,
-          start: "top bottom",
-          end: "bottom bottom"
-        }
-      });
-    });
-  }); 
+          start: 'top bottom',
+          end: 'bottom bottom',
+        },
+      })
+    })
+  })
 </script>
 <!-- [External Scripts by Digital Sparks] -->
 
-
 <script>
-  (function () {
+  ;(function () {
     const script = document.createElement('script')
-    script.crossorigin = "anonymous"
+    script.crossorigin = 'anonymous'
     script.defer = true
-    script.src = /** `website-dev/prod` */
+    script.src =
+      /** `website-dev/prod` */
       window.location.host === 'staging-alphabeats.webflow.io'
         ? 'https://js.sentry-cdn.com/f2763b970d80b36d36be42e167f95140.min.js'
         : 'https://js.sentry-cdn.com/7df43afdf2f35440d6f008c872b9f5bc.min.js'
     document.head.appendChild(script)
-  })();
+  })()
 </script>
 
 <style>
@@ -275,7 +456,7 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
-  input[type="submit"]:disabled {
+  input[type='submit']:disabled {
     cursor: not-allowed;
     opacity: 0.5;
   }
