@@ -22,6 +22,7 @@ export function handleMusePartnerDiscount() {
   if (!button) return
 
   const url = new URL(button.href)
-  url.searchParams.set(OFFER_MUSERS_ACTIVATION_SEARCH_PARAM, 'true')
+  url.searchParams.set('offer', OFFER_MUSERS_ACTIVATION_SEARCH_PARAM)
+  url.searchParams.set('tabIndex', '0')
   button.href = url.toString()
 }
