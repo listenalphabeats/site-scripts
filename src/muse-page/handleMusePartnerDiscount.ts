@@ -1,11 +1,8 @@
-import {
-  MUSE_IN_BOX_TRIAL_SEARCH_PARAM,
-  OFFER_MUSERS_ACTIVATION_SEARCH_PARAM,
-} from '../config'
+import { OFFER_MUSERS_ACTIVATION_SEARCH_PARAM } from '../config'
 
-export function handleMuseInBoxOffer() {
+export function handleMusePartnerDiscount() {
   const params = new URLSearchParams(window.location.search)
-  if (!params.has(MUSE_IN_BOX_TRIAL_SEARCH_PARAM)) return
+  if (!params.has(OFFER_MUSERS_ACTIVATION_SEARCH_PARAM)) return
 
   function setDisplay(element, display) {
     if (element) element.style.display = display ? 'flex' : 'none'
@@ -23,6 +20,6 @@ export function handleMuseInBoxOffer() {
   if (!button) return
 
   const url = new URL(button.href)
-  url.searchParams.set(MUSE_IN_BOX_TRIAL_SEARCH_PARAM, 'true')
+  url.searchParams.set(OFFER_MUSERS_ACTIVATION_SEARCH_PARAM, 'true')
   button.href = url.toString()
 }

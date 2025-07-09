@@ -1,11 +1,14 @@
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     if (window.ab?.handleMuseInBoxOffer instanceof Function) {
-      window.ab.handleMuseInBoxOffer();
+      window.ab.handleMuseInBoxOffer()
+    } else if (window.ab?.handleMusePartnerDiscount instanceof Function) {
+      window.ab.handleMusePartnerDiscount()
     } else {
-      const message = 'Required function handleMuseInBoxOffer is not available'
+      const message =
+        'Required function handleMuseInBoxOffer or handleMusePartnerDiscount is not available'
       window.Sentry?.captureMessage(message, 'warning')
       console.warn(message)
     }
-  }); 
+  })
 </script>
