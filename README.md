@@ -6,7 +6,7 @@
   script.src =
     window.location.host === 'staging-alphabeats.webflow.io'
       ? 'http://localhost:3001/dist/bundle.js?v=' + new Date().getTime()
-      : 'https://cdn.jsdelivr.net/gh/listenalphabeats/site-scripts@1.1.24/dist/bundle.js'
+      : 'https://cdn.jsdelivr.net/gh/listenalphabeats/site-scripts@1.1.25/dist/bundle.js'
   document.head.appendChild(script)
 </script>
 ```
@@ -15,6 +15,6 @@
 <!-- CDN -->
 <script
   defer
-  src="https://cdn.jsdelivr.net/gh/listenalphabeats/site-scripts@1.1.24/dist/bundle.js"
+  src="https://cdn.jsdelivr.net/gh/listenalphabeats/site-scripts@1.1.25/dist/bundle.js"
 ></script>
 ```
